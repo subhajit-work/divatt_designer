@@ -1,0 +1,283 @@
+<!-- profile card start -->
+<section class="profile-card mt-4">
+    <div class="container-fluid">
+        <div class="profile-card-inner">
+            <div class="row">
+                <div class="col-lg-3 col-4">
+                    <div class="profile-img-box">
+                        <div class="profile-img">
+                            <img [src]="designerprofiledata?.designerProfile?.profilePic!= null ? designerprofiledata?.designerProfile?.profilePic : 'assets/images/noimage.jpg'">
+                        </div>
+                    </div>
+                    <div class="profile-btn mobile-only">
+                        <button class="button1" mat-raised-button (click)="activeDesigner('Online')" *ngIf="designerprofiledata.designerCurrentStatus == 'Offline' ||designerprofiledata.designerCurrentStatus == null">ACTIVE</button>
+                        <button class="button1" mat-raised-button (click)="activeDesigner('Offline')" *ngIf="designerprofiledata.designerCurrentStatus == 'Online'">INACTIVE</button>
+                        <!-- {{designerCurrentStatus == 'ACTIVE' ? 'ACTIVE' : 'INACTIVE' }} -->
+                    </div>
+                </div>
+                <div class="col-lg-9 col-8">
+                    <div class="profile-details">
+                        <p class="designer-name">{{designerprofiledata?.designerName}}</p>
+                        <p class="brand">
+                            <!-- <mat-icon>campaign</mat-icon> -->
+                            <img src="assets/images/campaign.png">
+                            {{designerprofiledata?.boutiqueProfile?.boutiqueName}}
+                        </p>
+                        <p class="designer-desc not-in-mobile">
+                            {{designerprofiledata?.socialProfile?.description}}
+                        </p>
+                        <div class="mobile-only">
+                            <div class="follower-product">
+                                <p>
+                                    <b>{{designerprofiledata?.followerCount}}</b>
+                                    Followers
+                                </p>
+                                <p>
+                                    <b>{{designerprofiledata?.productCount}}</b>
+                                    Products
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row mobile-only">
+                <div class="col-12">
+                    <p class="designer-desc">
+                        {{designerprofiledata?.socialProfile?.description}}
+                    </p>
+                    <span>more</span>
+                </div>
+            </div>
+            <div class="row mt-4 not-in-mobile">
+                <div class="col-lg-3">
+                    <div class="profile-btn">
+                        <button class="button1" mat-raised-button (click)="activeDesigner('Online')" *ngIf="designerprofiledata.designerCurrentStatus == 'Offline' ||designerprofiledata.designerCurrentStatus == null" [disabled]="profilestatusLoader">ACTIVE</button>
+                        <button class="button1" mat-raised-button (click)="activeDesigner('Offline')" *ngIf="designerprofiledata.designerCurrentStatus == 'Online'" [disabled]="profilestatusLoader">INACTIVE</button>
+                    </div>
+                </div>
+                <div class="col-lg-9 d-flex flex-column justify-content-between m-auto">
+                    <div class="profile-footer-desc">
+                        <p>Follower : <span>{{designerprofiledata?.followerCount}}</span></p>
+                        <p>Products : <span>{{designerprofiledata?.productCount}}</span></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- profile card end -->
+<!-- Product show start -->
+<section class="products">
+    <div class="container-fluid ">
+        <div class="products-header">
+            <div class="products-tittle" id="first-row">
+                COLLECTIONS
+            </div>
+            <div class="products-tab not-in-mobile not-in-tab" id="second-row">
+                <div class="togglebuttons">
+                    <mat-button-toggle-group name="fontStyle" aria-label="Font Style">
+                        <mat-button-toggle  class="mat-button-toggle-checked" (click)="onChangeTab('TAB','live')" [ngClass]="{'mat-button-toggle-checked': tab == 'live'}">Live <span class="numbers">({{allCounts?.live}})</span></mat-button-toggle>
+                        <mat-button-toggle  (click)="onChangeTab('TAB','pending')" [ngClass]="{'mat-button-toggle-checked': tab == 'pending'}">Pending <span class="numbers">({{allCounts?.pending}})</span></mat-button-toggle>
+                        <mat-button-toggle  (click)="onChangeTab('TAB','reject')" [ngClass]="{'mat-button-toggle-checked': tab == 'reject'}">Reject <span class="numbers">({{allCounts?.reject}})</span></mat-button-toggle>
+                        <mat-button-toggle  (click)="onChangeTab('TAB','ls')" [ngClass]="{'mat-button-toggle-checked': tab == 'ls'}">LS <span class="numbers">({{allCounts?.ls}})</span></mat-button-toggle>
+                        <mat-button-toggle  (click)="onChangeTab('TAB','oos')" [ngClass]="{'mat-button-toggle-checked': tab == 'oos'}">OOS <span class="numbers">({{allCounts?.oos}})</span></mat-button-toggle>
+                    </mat-button-toggle-group>
+                </div>
+            </div>
+            <div id="second-row" class="mobile-only tab-only width-100">
+                <select class="select-home-tab" (change)="onChangeTab('dropdown',$event)" >
+                    <option value="live" selected>Live ({{allCounts?.live}})</option>
+                    <option value="pending">Pending ({{allCounts?.pending}})</option>
+                    <option value="reject">Reject ({{allCounts?.reject}})</option>
+                    <option value="ls">LS ({{allCounts?.ls}})</option>
+                    <option value="oos">OOS ({{allCounts?.oos}})</option>
+                </select> 
+            </div>
+            <div class="products-filter" id="third-row">
+                <div class="responsive-filtter home-search">
+                    <button class="fab-btn search-hiden" mat-fab (click)="active()">
+                        <mat-icon class="search-btn" >search</mat-icon></button>
+                    <button class="fab-btn" [ngClass]="{'active': active_class}" mat-fab aria-label="Filter Product" >
+                        <input type="text" value="" placeholder="Search..." name="searchTerm" [(ngModel)]="searchTerm" class="search-input" (input)="searchingData($event)">
+                        <div class="clear-btn"><mat-icon (click)="clear()">clear</mat-icon></div>
+                        <mat-icon class="search-btn">search</mat-icon>
+                    </button>  
+                    <button  mat-button [matMenuTriggerFor]="filterMenu" class="fab-btn" mat-fab aria-label="Filter Product">
+                        <mat-icon> sort</mat-icon>
+                    </button>
+                    <mat-menu #filterMenu="matMenu" xPosition="before">
+                        <button mat-menu-item (click)="sortBy('ls')">Low stock (2)</button>
+                        <button mat-menu-item (click)="sortBy('oos')">Out of stock (3)</button>
+                        <button mat-menu-item (click)="sortBy('new')">Newest First</button>
+                        <button mat-menu-item (click)="sortBy('old')">Oldest First</button>
+                    </mat-menu>
+                </div>
+            </div>
+        </div>
+        <div class="row" infiniteScroll [infiniteScrollDistance]="0.1" (scrolled)="onScroll()" *ngIf="productsList.length">
+            <div class="col-lg-3 col-md-3 col-sm-4 col-xs-6 col-6 col-xl-2">
+                <div class="product-add-card" >
+                    <div class="add-card-inner" [routerLink]="['/', 'product','add','id']">
+                        <img src="assets/images/plus-cercle.png">
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-3 col-sm-4 col-xs-6 col-6 col-xl-2" *ngFor="let product of productsList;let i = index;">
+                <div class="product-card" >
+                    <div class="product-img">
+                        <img class="item-img"  [src]="product?.images[0].name!= null ? product?.images[0].name : 'assets/images/product/noproduct.jpg'" [routerLink]="['/', 'product-view',product?.productId]">
+                        <!-- ----product on off---- -->
+                        <span class="on_off"   *ngIf="tab == 'live' || tab == 'ls' || tab == 'oos'">
+                            <div class="on-off-toggle">
+                                <input class="on-off-toggle__input" type="checkbox" [checked]="product?.isActive" [id]="product?.productId" (change)="statusChange(product.productId)"/>
+                                <label [for]="product?.productId" class="on-off-toggle__slider"></label>
+                            </div>
+                        </span>
+                        <!-- product delete -->
+                        <span class="delete" *ngIf="tab == 'reject' || tab == 'pending'" (click)="delete_modal(deleteModal,product.productId)"><i class="fa fa-trash" aria-hidden="true"></i></span>
+                        
+                
+                        <!-- product stock -->
+                        <span class="stock" *ngIf="tab == 'live' || tab == 'pending' || tab == 'ls' || tab == 'oos'">10</span>
+                
+                        <!-- product message -->
+                        <span class="p_message" *ngIf="tab == 'reject'"  (click)="message_modal(messageModal,product.comments)" ><mat-icon class="text-black">chat_bubble</mat-icon></span>
+                        <!--  -->
+                        <!-- edit product -->
+                        <span class="p_edit" *ngIf="tab == 'oos'" [routerLink]="['/', 'product','edit',product?.productId]"><i class="fa fa-pencil" aria-hidden="true"></i></span>
+                
+                    </div>
+                    <div class="product-content">
+                        <p class="name">{{product?.productName}}</p>
+                        <p class="description">{{product?.productDescription}}</p>
+                        <div class="d-flex justify-content-between">
+                            <p class="price">₹ {{product?.price?.indPrice?.dealPrice}} <del>₹ {{product?.price?.indPrice?.mrp}}</del></p>
+                            <!-- sale product -->
+                            <!-- <p class="product-sale">Sale</p> -->
+                
+                            <!-- new product -->
+                            <p class="product-new">New</p>
+                
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+        <div class="row pb-3">
+            <div class="position-relative">
+                <!-- <div class="loading-container">
+                    <div class="spinner">
+                      <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                        <circle cx="50" cy="50" r="46" />
+                      </svg>
+                    </div>
+                    <h1 class="loading-title">Loading...</h1>
+                </div> -->
+                <div class="loader2" *ngIf="isListLoading"><span></span></div>
+            </div>
+            
+        </div>
+        <div class="row justify-content-center empty-cart-cls"  [ngClass]="{'d-none': isListLoading}">
+            <div class="text-center">
+              <img src="assets/images/no-product-found.png" alt="" *ngIf="noProductFound">
+              <h2 *ngIf="noProductFound"><b>No Product Found.</b></h2>
+              <h2 *ngIf="nomoreProductFound"><b>No more Product Found.</b></h2>
+            </div>  
+          </div>
+    </div>
+</section>
+<!-- Product show end -->
+
+
+
+<!-- delete modal -->
+<ng-template #deleteModal let-modal>
+    <div class="delete_modal">
+        <div class="modal-header">
+            <h4 class="modal-title" id="modal-basic-title">Are You Sure ?</h4>
+            <!-- <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+              <span aria-hidden="true">&times;</span>
+            </button> -->
+          </div>
+          <!-- <div class="modal-body">
+            Here I am!
+          </div> -->
+          <div class="modal-footer">
+              <button type="button" class="btn btn-outline-dark yes-btn" (click)="deleteProduet()">Yes</button>
+              <button type="button" class="btn btn-outline-dark no-btn" (click)="modal.close('Save click')">No</button>
+          </div>
+    </div>
+</ng-template>
+
+<!-- message modal -->
+<ng-template #messageModal let-modal>
+    <div class="message_modal">
+        <div class="modal-header">
+            <h4 class="modal-title" id="modal-basic-title">Reason for Cancellation</h4>
+            <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+                <i class="fa fa-times" aria-hidden="true"></i>
+            </button>
+          </div>
+          <div class="modal-body">
+            <div class="massage_container">
+                <div *ngFor="let comment of adminComments;let i = index;" >
+                    <div class="massage_item">
+                        {{comment?.comments}}
+                    </div>
+                  <p class="dateTime">{{comment?.dateTime}}</p>
+                </div>    
+            </div>
+            
+          </div>
+          <!-- <div class="modal-footer">
+              <button type="button" class="btn btn-outline-dark yes-btn" >Yes</button>
+              <button type="button" class="btn btn-outline-dark no-btn" (click)="modal.close('Save click')">No</button>
+          </div> -->
+    </div>
+</ng-template>
+<div class="fullpage-loader" *ngIf="statusLoader">
+    <div class="loader2" ><span></span></div>
+</div>
+<!-- full product design -->
+<!-- <div class="col-lg-3 col-md-3 col-sm-4 col-xs-6 col-6 col-xl-2">
+    <div class="product-card">
+        <div class="product-img">
+            <img class="item-img"  src="assets/images/product/14.jpg">
+            ----product on off----
+            <span class="on_off">
+                <div class="on-off-toggle">
+                    <input class="on-off-toggle__input" type="checkbox" id="c_accept7" />
+                    <label for="c_accept7" class="on-off-toggle__slider"></label>
+                </div>
+            </span>
+            product delete
+            <span class="delete" (click)="delete_modal(deleteModal)"><i class="fa fa-trash" aria-hidden="true"></i></span>
+            
+    
+            product stock
+            <span class="stock">10</span>
+    
+            product message
+            <span class="p_message" (click)="message_modal(messageModal)"><mat-icon> chat_bubble</mat-icon></span>
+    
+            edit product
+            <span class="p_edit"><i class="fa fa-pencil" aria-hidden="true"></i></span>
+    
+        </div>
+        <div class="product-content"  [routerLink]="['/', 'product-view']">
+            <p class="name">T-Shirt</p>
+            <p class="description">U S Polo Assn Men Red Slim Fit Pure Cotton Casual  T Shirt</p>
+            <div class="d-flex justify-content-between">
+                <p class="price">₹ 1200 <del>₹ 800</del></p>
+                sale product
+                <p class="product-sale">Sale</p>
+    
+                new product
+                <p class="product-new">New</p>
+    
+            </div>
+        </div>
+    </div>
+</div> -->

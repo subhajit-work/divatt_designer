@@ -1,0 +1,72 @@
+<header class="main-header">
+    <div class="container-fluid">
+        <div class="header-inner">
+            <div class="header-left">
+                <div class="nav-btn">
+                    <a (click)="openNav()" class="cursor-pointer text-dark" [ngClass]="{'disabled':disabled}">
+                        <mat-icon>menu</mat-icon>
+                    </a>
+                    <div class="admin-side-nav" [ngClass]="{ 'open-side': openleftnav}">
+                        <div class="sidebar-overlay" (click)="openNav()"></div>
+                        <div class="sidebar-back text-left" (click)="openNav()">
+                          <i  class="fa fa-angle-left pr-2"></i> Back 
+                        </div>
+                        <div class="side-nav-inner">
+                          <ul class="sm pixelstrap sm-vertical desktop p-0" >
+                            <li class="main-item">
+                                <a   class="main-link" [routerLink]="'/home'"  (click)="openNav()">
+                                    <span>Home</span>  
+                                </a>
+                           </li>
+                           <li class="main-item">
+                            <a   class="main-link" [routerLink]="'/order-list'"  (click)="openNav()">
+                                <span>Orders</span>  
+                            </a>
+                            </li>
+                            <li class="main-item">
+                                <a   class="main-link" [routerLink]="'/report'"  (click)="openNav()">
+                                    <span>Reports</span>  
+                                </a>
+                            </li>
+                          </ul> 
+                        </div>
+                        <div class="logoutbtn">
+                            <a href="http://65.1.190.195/divatt/divatt-designer/">
+                                <button class="login-button" mat-raised-button (click)="logOutUser()">
+                                    <span>Logout</span> &nbsp;&nbsp;
+                                    <mat-icon>exit_to_app</mat-icon>
+                                </button>
+                            </a>
+                        </div> 
+                      </div>
+                </div>
+            </div>
+            <div class="header-middle">
+                <div class="logo" (click)="clickUrl('/home')">
+                    <img src="assets/images/logo.png">
+                </div>
+            </div>
+            <div class="header-right">
+                <div class="icons">
+                    <ul>
+                        <!-- <li><img src="assets/images/search.png"></li> -->
+                        <li [ngClass]="{'disabled':disabled}">
+                            <img src="assets/images/bell.png">
+                            <span class="badge">1</span>
+                        </li>
+                        <li (click)="clickUrl('/order-list')" [ngClass]="{'disabled':disabled}">
+                            <img src="assets/images/box.png" >
+                            <span class="badge">1</span>
+                        </li>
+                        <li (click)="clickUrl('/profile')" [ngClass]="{'disabled':disabled}">
+                            <img src="assets/images/profile.png">
+                        </li>
+                    </ul>
+                </div>
+                <!-- <div class="profile" (click)="clickProfile()">
+                    <img src="assets/images/profile.png">
+                </div> -->
+            </div>
+        </div>
+    </div>
+</header>

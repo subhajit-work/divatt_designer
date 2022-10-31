@@ -1,0 +1,1180 @@
+<div class="page-wrraper">
+    <div class="profile-edit-page">
+        <!-- profile card start -->
+        <section class="profile-card mt-4">
+            <div class="container-fluid">
+                <div class="profile-card-inner moblie-profile">
+                    <div class="row">
+                        <div class="col-lg-3 col-4">
+                            <div class="profile-img-box profie-box">
+                                <div class="profile-img">
+                                    <img [src]="designerprofiledata?.designerProfile?.profilePic!= null ? designerprofiledata?.designerProfile?.profilePic : 'assets/images/noimage.jpg'">
+                                    <mat-icon class="cam-icon">photo_camera</mat-icon>
+                                    <input type="file" id="profilepic"  class="opacity-0 h-0 p-0 profile-img-create" [ngClass]="{ 'disabled': imageLoader}"  (change)="chooseFile('DESIGNER',$event)">
+                                </div>
+                                
+                            </div>
+                            <div class="profile-btn mobile-only">
+                                <button class="button1" mat-raised-button (click)="activeDesigner('Online')" *ngIf="designerprofiledata.designerCurrentStatus == 'Offline' ||designerprofiledata.designerCurrentStatus == null" [disabled]="profilestatusLoader">ACTIVE</button>
+                                <button class="button1" mat-raised-button (click)="activeDesigner('Offline')" *ngIf="designerprofiledata.designerCurrentStatus == 'Online'" [disabled]="profilestatusLoader">INACTIVE</button>
+                            </div>
+                        </div>
+                        <div class="col-lg-9 col-8">
+                            <div class="profile-details">
+                                <div class="designer-name"><p>{{designerprofiledata?.designerName}}</p>  
+                                    <!-- <div *ngIf="hide_data == true" class="edit-icon" (click)="hide_details()">
+                                        <img src="assets/images/pencil.png">
+                                    </div> -->
+                                    <button *ngIf="hide_data == true" (click)="hide_details()" mat-button class="fab-btn" mat-fab aria-label="Filter Product">
+                                        <img src="assets/images/pencil.png">
+                                    </button>
+                                </div>
+                                <p class="brand">
+                                    <img src="assets/images/campaign.png">
+                                    {{designerprofiledata?.boutiqueProfile?.boutiqueName}}
+                                </p>
+                                <p class="designer-desc not-in-mobile">
+                                    {{designerprofiledata?.socialProfile?.description}}
+                                </p>
+                                <div class="mobile-only">
+                                    <div class="follower-product">
+                                        <p>
+                                            <b>{{designerprofiledata?.followerCount}}</b>
+                                            Followers
+                                        </p>
+                                        <p>
+                                            <b>{{designerprofiledata?.productCount}}</b>
+                                            Products
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row mobile-only">
+                        <div class="col-12">
+                            <p class="designer-desc">
+                                {{designerprofiledata?.socialProfile?.description}}
+                            </p>
+                            <span>more</span>
+                        </div>
+                    </div>
+                    <div class="row mt-4 not-in-mobile">
+                        <div class="col-lg-3">
+                            <div class="profile-btn ">
+                                <button class="button1" mat-raised-button (click)="activeDesigner('Online')" *ngIf="designerprofiledata.designerCurrentStatus == 'Offline' ||designerprofiledata.designerCurrentStatus == null" [disabled]="profilestatusLoader">ACTIVE</button>
+                        <button class="button1" mat-raised-button (click)="activeDesigner('Offline')" *ngIf="designerprofiledata.designerCurrentStatus == 'Online'" [disabled]="profilestatusLoader">INACTIVE</button>
+                            </div>
+                        </div>
+                        <div class="col-lg-9 d-flex flex-column justify-content-between m-auto">
+                            <div class="profile-footer-desc">
+                                <p>Follower : <span>{{designerprofiledata?.followerCount}}</span></p>
+                                <p>Products : <span>{{designerprofiledata?.productCount}}</span></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- profile card end -->
+        
+        <section class="profile-information">
+            <div class="container">
+                <form #profileEdit="ngForm" (ngSubmit)="onSubmitProfile(profileEdit)">
+                    <div class="row">
+                        <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-6">
+                            <!-- profile -->
+                            <div class="col-12 col-sm-12 col-md-12 col-lg-12">
+                                <div class="profile-info-card">
+                                    <div class="info-card-title">
+                                        <h4>Profile</h4>
+                                    </div>
+                                    <div class="profile-form">
+                                        <div class="row">
+                                            <div class="col-12 col-sm-12 col-md-6 col-lg-6">
+                                                <mat-form-field appearance="outline">
+                                                    <mat-label>Firstname</mat-label>
+                                                    <input matInput type="text" name="firstName1" [(ngModel)]="modal.firstName1" clearInput [readonly]="hide_data" >
+                                                </mat-form-field>
+                                            </div>
+                                            <div class="col-12 col-sm-12 col-md-6 col-lg-6">
+                                                <mat-form-field appearance="outline">
+                                                    <mat-label>Lastname</mat-label>
+                                                    <input matInput type="text" name="lastName1" [(ngModel)]="modal.lastName1" clearInput [readonly]="hide_data" >
+                                                </mat-form-field>
+                                            </div>
+                                            <div class="col-12 col-sm-12 col-md-6 col-lg-6">
+                                                <mat-form-field appearance="outline">
+                                                    <mat-label>Firstname</mat-label>
+                                                    <input matInput type="text" name="firstName2" [(ngModel)]="modal.firstName2" clearInput [readonly]="hide_data" >
+                                                </mat-form-field>
+                                            </div>
+                                            <div class="col-12 col-sm-12 col-md-6 col-lg-6">
+                                                <mat-form-field appearance="outline">
+                                                    <mat-label>Lastname</mat-label>
+                                                    <input matInput type="text" name="lastName2" [(ngModel)]="modal.lastName2" clearInput [readonly]="hide_data" >
+                                                </mat-form-field>
+                                            </div>
+                                            <div class="col-12 col-sm-12 col-md-6 col-lg-6">
+                                                <mat-form-field appearance="outline" class="example-form-field">
+                                                    <mat-label>Date of birth</mat-label>
+                                                    <input matInput [matDatepicker]="datepicker" name="dateOfbirth" [(ngModel)]="modal.dateOfbirth" [readonly]="hide_data"> 
+                                                    <mat-datepicker-toggle matSuffix [for]="datepicker"></mat-datepicker-toggle>
+                                                    <mat-datepicker #datepicker>
+                                                        <mat-datepicker-actions>
+                                                        <button mat-button matDatepickerCancel>Cancel</button>
+                                                        <button mat-raised-button color="primary" matDatepickerApply (click)="changeFateFormat(modal.dateOfbirth)">Apply</button>
+                                                        </mat-datepicker-actions>
+                                                    </mat-datepicker>
+                                                </mat-form-field>
+                                            </div>
+                                            <input type="hidden" name="dob" [(ngModel)]="modal.dob">
+                                            <div class="col-12 col-sm-12 col-md-6 col-lg-6 mb-20">
+                                                <p class="gender-title">Gender</p>
+                                                <mat-radio-group aria-label="Select an option" name="gender" [(ngModel)]="modal.gender">
+                                                    <mat-radio-button value="male" [checked]="true" class="mr-r-18" >Male</mat-radio-button>
+                                                    <mat-radio-button value="female">Female</mat-radio-button>
+                                                </mat-radio-group>
+                                            </div>
+                                            <div class="col-12 col-sm-12 col-md-6 col-lg-6">
+                                                <mat-form-field appearance="outline">
+                                                    <mat-label>Your Address</mat-label>
+                                                    <textarea matInput placeholder="Address" name="address"  [(ngModel)]="modal.address" clearInput [readonly]="hide_data"></textarea>
+                                                </mat-form-field>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                </div>
+                            </div>
+                            <!-- Social -->
+                            <div class="col-12 col-sm-12 col-md-12 col-lg-12 mobile-only">
+                                <div class="profile-info-card">
+                                    <div class="info-card-title">
+                                        <h4>Social</h4>
+                                    </div>
+                                    <div class="social-form">
+                                        <div class="row">
+                                            <div class="col-12 col-sm-12 col-md-6 col-lg-6">
+                                                <mat-form-field appearance="outline">
+                                                    <mat-label>Description</mat-label>
+                                                    <textarea matInput name="description"  [(ngModel)]="modal.description" clearInput [readonly]="hide_data"></textarea>
+                                                </mat-form-field>
+                                            </div>
+                                            <div class="col-12 col-sm-12 col-md-6 col-lg-6">
+                                                <mat-form-field appearance="outline">
+                                                    <mat-label>Facebook Link</mat-label>
+                                                    <input matInput type="text" name="facebookLink"  [(ngModel)]="modal.facebookLink" clearInput  [readonly]="hide_data">
+                                                </mat-form-field>
+                                            </div>
+                                            <div class="col-12 col-sm-12 col-md-6 col-lg-6">
+                                                <mat-form-field appearance="outline">
+                                                    <mat-label>Instagram Link</mat-label>
+                                                    <input matInput type="text" name="instagramLink"  [(ngModel)]="modal.instagramLink" clearInput [readonly]="hide_data" >
+                                                </mat-form-field>
+                                            </div>
+                                            <div class="col-12 col-sm-12 col-md-6 col-lg-6">
+                                                <mat-form-field appearance="outline">
+                                                    <mat-label>Youube Link</mat-label>
+                                                    <input matInput type="text" name="youtubeLink" [(ngModel)]="modal.youtubeLink"  clearInput  [readonly]="hide_data">
+                                                </mat-form-field>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- More -->
+                            <div class="col-12 col-sm-12 col-md-12 col-lg-12">
+                                <div class="profile-info-card">
+                                    <div class="info-card-title">
+                                        <h4>More</h4>
+                                    </div>
+                                    <div class="more-form">
+                                        <div class="row">
+                                            <div class="col-12 col-sm-12 col-md-6 col-lg-6">
+                                                <mat-form-field appearance="outline">
+                                                    <mat-label>Boutique Name</mat-label>
+                                                    <input matInput type="text" name="boutiqueName"  [(ngModel)]="modal.boutiqueName" clearInput  [readonly]="hide_data">
+                                                </mat-form-field>
+                                            </div>
+                                            <div class="col-12 col-sm-12 col-md-6 col-lg-6">
+                                                <mat-form-field appearance="outline">
+                                                    <mat-label>Year of experience</mat-label>
+                                                    <input matInput type="text" name="experience"  [(ngModel)]="modal.experience" clearInput [readonly]="hide_data" >
+                                                </mat-form-field>
+                                            </div>
+                                            <div class="col-12 col-sm-12 col-md-6 col-lg-6">
+                                                <mat-form-field appearance="outline">
+                                                    <mat-label>GSTIN</mat-label>
+                                                    <input matInput type="text" name="gstin"  [(ngModel)]="modal.gstin" clearInput [readonly]="hide_data" >
+                                                </mat-form-field>
+                                            </div>
+                                            <div class="col-12 col-sm-12 col-md-6 col-lg-6">
+                                                <mat-form-field appearance="outline">
+                                                    <mat-label>Operating City</mat-label>
+                                                    <input matInput type="text" name="operatingCity"  [(ngModel)]="modal.operatingCity" clearInput [readonly]="hide_data" >
+                                                </mat-form-field>
+                                            </div>
+                                            <div class="col-12 col-sm-12 col-md-6 col-lg-6">
+                                                <mat-form-field appearance="outline">
+                                                    <mat-label>Professional Category</mat-label>
+                                                    <input matInput type="text" name="professionalCategory"  [(ngModel)]="modal.professionalCategory" clearInput  [readonly]="hide_data">
+                                                </mat-form-field>
+                                            </div>
+                                            <div class="col-12 col-sm-12 col-md-6 col-lg-6">
+                                                <mat-form-field appearance="outline">
+                                                    <mat-label>Year of Operation</mat-label>
+                                                    <input matInput type="text" name="yearOfOperation" [(ngModel)]="modal.yearOfOperation" clearInput [readonly]="hide_data" >
+                                                </mat-form-field>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Women std chart -->
+                            <div class="col-12 col-sm-12 col-md-12 col-lg-12 not-in-mobile">
+                                <div class="profile-info-card">
+                                    <div class="info-card-title d-flex space-between">
+                                        <h4>Women std chart</h4>
+                                    </div>
+                                    <!-- [ngClass]="{'dis_none':allgarmentReturnData == ''}" -->
+                                    <div class="women-charts">
+                                        <div class="row pd-b-20">
+                                            <div class="in-cms"><span class="in" >In</span><mat-slide-toggle (click)="onClick($event, 'cms')"></mat-slide-toggle><span class="cms">Cms</span></div>
+                                        </div>
+                                        <table>
+                                            <thead>
+                                                <th>(in inches)</th>
+                                                <th>UK</th>
+                                                <th>Bust</th>
+                                                <th>Waist</th>
+                                                <th>Hip</th>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td><b>XS</b></td>
+                                                    <td>
+                                                        <div class="from-field">
+                                                            <input type="text" name="uk_value" placeholder="Enter Value" [readonly]="hide_data">
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <div class="from-field">
+                                                            <input type="text" name="bust_value" placeholder="Enter Value" [readonly]="hide_data">
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <div class="from-field">
+                                                            <input type="text" name="waist_value" placeholder="Enter Value" [readonly]="hide_data">
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <div class="from-field">
+                                                            <input type="text" name="hip_value" placeholder="Enter Value" [readonly]="hide_data">
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td><b>S</b></td>
+                                                    <td>
+                                                        <div class="from-field">
+                                                            <input type="text" name="uk_value" placeholder="Enter Value" [readonly]="hide_data">
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <div class="from-field">
+                                                            <input type="text" name="bust_value" placeholder="Enter Value" [readonly]="hide_data">
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <div class="from-field">
+                                                            <input type="text" name="waist_value" placeholder="Enter Value" [readonly]="hide_data">
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <div class="from-field">
+                                                            <input type="text" name="hip_value" placeholder="Enter Value" [readonly]="hide_data">
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td><b>M</b></td>
+                                                    <td>
+                                                        <div class="from-field">
+                                                            <input type="text" name="uk_value" placeholder="Enter Value" [readonly]="hide_data">
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <div class="from-field">
+                                                            <input type="text" name="bust_value" placeholder="Enter Value" [readonly]="hide_data">
+                                                        </div> 
+                                                    </td>
+                                                    <td>
+                                                        <div class="from-field">
+                                                            <input type="text" name="waist_value" placeholder="Enter Value" [readonly]="hide_data">
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <div class="from-field">
+                                                            <input type="text" name="hip_value" placeholder="Enter Value" [readonly]="hide_data">
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td><b>L</b></td>
+                                                    <td>
+                                                        <div class="from-field">
+                                                            <input type="text" name="uk_value" placeholder="Enter Value" [readonly]="hide_data">
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <div class="from-field">
+                                                            <input type="text" name="bust_value" placeholder="Enter Value" [readonly]="hide_data">
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <div class="from-field">
+                                                            <input type="text" name="waist_value" placeholder="Enter Value" [readonly]="hide_data">
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <div class="from-field">
+                                                            <input type="text" name="hip_value" placeholder="Enter Value" [readonly]="hide_data">
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td><b>XL</b></td>
+                                                    <td>
+                                                        <div class="from-field">
+                                                            <input type="text" name="uk_value" placeholder="Enter Value" [readonly]="hide_data">
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <div class="from-field">
+                                                            <input type="text" name="bust_value" placeholder="Enter Value" [readonly]="hide_data">
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <div class="from-field">
+                                                            <input type="text" name="waist_value" placeholder="Enter Value" [readonly]="hide_data">
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <div class="from-field">
+                                                            <input type="text" name="hip_value" placeholder="Enter Value" [readonly]="hide_data">
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td><b>XXL</b></td>
+                                                    <td>
+                                                        <div class="from-field">
+                                                            <input type="text" name="uk_value" placeholder="Enter Value" [readonly]="hide_data">
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <div class="from-field">
+                                                            <input type="text" name="bust_value" placeholder="Enter Value" [readonly]="hide_data">
+                                                        </div> 
+                                                    </td>
+                                                    <td>
+                                                        <div class="from-field">
+                                                            <input type="text" name="waist_value" placeholder="Enter Value" [readonly]="hide_data">
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <div class="from-field">
+                                                            <input type="text" name="hip_value" placeholder="Enter Value" [readonly]="hide_data">
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td><b>3XL</b></td>
+                                                    <td>
+                                                        <div class="from-field">
+                                                            <input type="text" name="uk_value" placeholder="Enter Value" [readonly]="hide_data">
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <div class="from-field">
+                                                            <input type="text" name="bust_value" placeholder="Enter Value" [readonly]="hide_data">
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <div class="from-field">
+                                                            <input type="text" name="waist_value" placeholder="Enter Value" [readonly]="hide_data">
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <div class="from-field">
+                                                            <input type="text" name="hip_value" placeholder="Enter Value" [readonly]="hide_data">
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td><b>4XL</b></td>
+                                                    <td>
+                                                        <div class="from-field">
+                                                            <input type="text" name="uk_value" placeholder="Enter Value" [readonly]="hide_data">
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <div class="from-field">
+                                                            <input type="text" name="bust_value" placeholder="Enter Value" [readonly]="hide_data">
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <div class="from-field">
+                                                            <input type="text" name="waist_value" placeholder="Enter Value" [readonly]="hide_data">
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <div class="from-field">
+                                                            <input type="text" name="hip_value" placeholder="Enter Value" [readonly]="hide_data">
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td><b>5XL</b></td>
+                                                    <td>
+                                                        <div class="from-field">
+                                                            <input type="text" name="uk_value" placeholder="Enter Value" [readonly]="hide_data">
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <div class="from-field">
+                                                            <input type="text" name="bust_value" placeholder="Enter Value" [readonly]="hide_data">
+                                                        </div> 
+                                                    </td>
+                                                    <td>
+                                                        <div class="from-field">
+                                                            <input type="text" name="waist_value" placeholder="Enter Value" [readonly]="hide_data">
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <div class="from-field">
+                                                            <input type="text" name="hip_value" placeholder="Enter Value" [readonly]="hide_data">
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td><b>6XL</b></td>
+                                                    <td>
+                                                        <div class="from-field">
+                                                            <input type="text" name="uk_value" placeholder="Enter Value" [readonly]="hide_data">
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <div class="from-field">
+                                                            <input type="text" name="bust_value" placeholder="Enter Value" [readonly]="hide_data">
+                                                        </div> 
+                                                    </td>
+                                                    <td>
+                                                        <div class="from-field">
+                                                            <input type="text" name="waist_value" placeholder="Enter Value" [readonly]="hide_data">
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <div class="from-field">
+                                                            <input type="text" name="hip_value" placeholder="Enter Value" [readonly]="hide_data">
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-6">
+                            <!-- Social -->
+                            <div class="col-12 col-sm-12 col-md-12 col-lg-12 not-in-mobile">
+                                <div class="profile-info-card">
+                                    <div class="info-card-title">
+                                        <h4>Social</h4>
+                                    </div>
+                                    <div class="social-form">
+                                        <div class="row">
+                                            <div class="col-12 col-sm-12 col-md-6 col-lg-6">
+                                                <mat-form-field appearance="outline">
+                                                    <mat-label>Description</mat-label>
+                                                    <textarea matInput name="description"  [(ngModel)]="modal.description" clearInput [readonly]="hide_data"></textarea>
+                                                </mat-form-field>
+                                            </div>
+                                            <div class="col-12 col-sm-12 col-md-6 col-lg-6">
+                                                <mat-form-field appearance="outline">
+                                                    <mat-label>Facebook Link</mat-label>
+                                                    <input matInput type="text" name="facebookLink"  [(ngModel)]="modal.facebookLink" clearInput  [readonly]="hide_data">
+                                                </mat-form-field>
+                                            </div>
+                                            <div class="col-12 col-sm-12 col-md-6 col-lg-6">
+                                                <mat-form-field appearance="outline">
+                                                    <mat-label>Instagram Link</mat-label>
+                                                    <input matInput type="text" name="instagramLink"  [(ngModel)]="modal.instagramLink" clearInput  [readonly]="hide_data">
+                                                </mat-form-field>
+                                            </div>
+                                            <div class="col-12 col-sm-12 col-md-6 col-lg-6">
+                                                <mat-form-field appearance="outline">
+                                                    <mat-label>Youube Link</mat-label>
+                                                    <input matInput type="text" name="youtubeLink" [(ngModel)]="modal.youtubeLink"  clearInput  [readonly]="hide_data">
+                                                </mat-form-field>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Bank Details -->
+                            <div class="col-12 col-sm-12 col-md-12 col-lg-12">
+                                <div class="profile-info-card">
+                                    <div class="info-card-title">
+                                        <h4>Bank Details</h4>
+                                    </div>
+                                    <div class="bank_details-form">
+                                        <div class="row">
+                                            <div class="col-12 col-sm-12 col-md-6 col-lg-6">
+                                                <mat-form-field appearance="outline">
+                                                    <mat-label>Account Number</mat-label>
+                                                    <input matInput type="text" name="accountNumber" [(ngModel)]="modal.accountNumber" clearInput [readonly]="hide_data" >
+                                                </mat-form-field>
+                                            </div>
+                                            <div class="col-12 col-sm-12 col-md-6 col-lg-6">
+                                                <mat-form-field appearance="outline">
+                                                    <mat-label>Bank Name</mat-label>
+                                                    <input matInput type="text" name="bankName" [(ngModel)]="modal.bankName" clearInput  [readonly]="hide_data">
+                                                </mat-form-field>
+                                            </div>
+                                            <div class="col-12 col-sm-12 col-md-6 col-lg-6">
+                                                <mat-form-field appearance="outline">
+                                                    <mat-label>IFSC Code</mat-label>
+                                                    <input matInput type="text" name="ifscCode" [(ngModel)]="modal.ifscCode" clearInput [readonly]="hide_data" >
+                                                </mat-form-field>
+                                            </div>
+                                            <div class="col-12 col-sm-6 col-md-6 col-lg-6 mb-20 d-flex align-items-center" >
+                                                <div class="custom-file preview">
+                                                    <input type="hidden"  name="aadharCard" [(ngModel)]="modal.aadharCard"  required >
+                                                    <input class="custom-file-input" id="singleFileUpload" type="file" name="imageUrl" accept="image/*" (change)="selectFile($event,'aadharCard')" >
+                                                    <label class="custom-file-label" for="singleFileUpload">Choose file aadhar</label>
+                                                </div>
+                                                <img *ngIf="previewimageSrc_aadher" class="preview-img" [src]="previewimageSrc_aadher">
+                                            </div>
+                                            <div class="col-12 col-sm-6 col-md-6 col-lg-6 d-flex align-items-center">
+                                                <div class="custom-file preview">
+                                                    <input type="hidden"  name="panCard" [(ngModel)]="modal.panCard"  required >
+                                                    <input class="custom-file-input" id="singleFileUpload" type="file" name="imageUrl" accept="image/*" (change)="selectFile($event,'panCard')" >
+                                                    <label class="custom-file-label" for="singleFileUpload">Choose file PAN</label>
+                                                </div>
+                                                <img *ngIf="previewimageSrc_pan" class="preview-img" [src]="previewimageSrc_pan">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Women std chart -->
+                            <div class="col-12 col-sm-12 col-md-12 col-lg-12 mobile-only">
+                                <div class="profile-info-card">
+                                    <div class="info-card-title d-flex space-between">
+                                        <h4>Women std chart</h4>
+                                    </div>
+                                    <!-- [ngClass]="{'dis_none':allgarmentReturnData == ''}" -->
+                                    <div class="women-charts">
+                                        <div class="row pd-b-20">
+                                            <div class="in-cms"><span class="in" >In</span><mat-slide-toggle (click)="onClick($event, 'cms')"></mat-slide-toggle><span class="cms">Cms</span></div>
+                                        </div>
+                                        <table>
+                                            <thead>
+                                                <th>(in inches)</th>
+                                                <th>UK</th>
+                                                <th>Bust</th>
+                                                <th>Waist</th>
+                                                <th>Hip</th>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td><b>XS</b></td>
+                                                    <td>
+                                                        <div class="from-field">
+                                                            <input type="text" name="uk_value" placeholder="Enter Value" [readonly]="hide_data">
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <div class="from-field">
+                                                            <input type="text" name="bust_value" placeholder="Enter Value" [readonly]="hide_data">
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <div class="from-field">
+                                                            <input type="text" name="waist_value" placeholder="Enter Value" [readonly]="hide_data">
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <div class="from-field">
+                                                            <input type="text" name="hip_value" placeholder="Enter Value" [readonly]="hide_data">
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td><b>S</b></td>
+                                                    <td>
+                                                        <div class="from-field">
+                                                            <input type="text" name="uk_value" placeholder="Enter Value" [readonly]="hide_data">
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <div class="from-field">
+                                                            <input type="text" name="bust_value" placeholder="Enter Value" [readonly]="hide_data">
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <div class="from-field">
+                                                            <input type="text" name="waist_value" placeholder="Enter Value" [readonly]="hide_data">
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <div class="from-field">
+                                                            <input type="text" name="hip_value" placeholder="Enter Value" [readonly]="hide_data">
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td><b>M</b></td>
+                                                    <td>
+                                                        <div class="from-field">
+                                                            <input type="text" name="uk_value" placeholder="Enter Value" [readonly]="hide_data">
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <div class="from-field">
+                                                            <input type="text" name="bust_value" placeholder="Enter Value" [readonly]="hide_data">
+                                                        </div> 
+                                                    </td>
+                                                    <td>
+                                                        <div class="from-field">
+                                                            <input type="text" name="waist_value" placeholder="Enter Value" [readonly]="hide_data">
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <div class="from-field">
+                                                            <input type="text" name="hip_value" placeholder="Enter Value" [readonly]="hide_data">
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td><b>L</b></td>
+                                                    <td>
+                                                        <div class="from-field">
+                                                            <input type="text" name="uk_value" placeholder="Enter Value" [readonly]="hide_data">
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <div class="from-field">
+                                                            <input type="text" name="bust_value" placeholder="Enter Value" [readonly]="hide_data">
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <div class="from-field">
+                                                            <input type="text" name="waist_value" placeholder="Enter Value" [readonly]="hide_data">
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <div class="from-field">
+                                                            <input type="text" name="hip_value" placeholder="Enter Value" [readonly]="hide_data">
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td><b>XL</b></td>
+                                                    <td>
+                                                        <div class="from-field">
+                                                            <input type="text" name="uk_value" placeholder="Enter Value" [readonly]="hide_data">
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <div class="from-field">
+                                                            <input type="text" name="bust_value" placeholder="Enter Value" [readonly]="hide_data">
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <div class="from-field">
+                                                            <input type="text" name="waist_value" placeholder="Enter Value" [readonly]="hide_data">
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <div class="from-field">
+                                                            <input type="text" name="hip_value" placeholder="Enter Value" [readonly]="hide_data">
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td><b>XXL</b></td>
+                                                    <td>
+                                                        <div class="from-field">
+                                                            <input type="text" name="uk_value" placeholder="Enter Value" [readonly]="hide_data">
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <div class="from-field">
+                                                            <input type="text" name="bust_value" placeholder="Enter Value" [readonly]="hide_data">
+                                                        </div> 
+                                                    </td>
+                                                    <td>
+                                                        <div class="from-field">
+                                                            <input type="text" name="waist_value" placeholder="Enter Value" [readonly]="hide_data">
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <div class="from-field">
+                                                            <input type="text" name="hip_value" placeholder="Enter Value" [readonly]="hide_data">
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td><b>3XL</b></td>
+                                                    <td>
+                                                        <div class="from-field">
+                                                            <input type="text" name="uk_value" placeholder="Enter Value" [readonly]="hide_data">
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <div class="from-field">
+                                                            <input type="text" name="bust_value" placeholder="Enter Value" [readonly]="hide_data">
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <div class="from-field">
+                                                            <input type="text" name="waist_value" placeholder="Enter Value" [readonly]="hide_data">
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <div class="from-field">
+                                                            <input type="text" name="hip_value" placeholder="Enter Value" [readonly]="hide_data">
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td><b>4XL</b></td>
+                                                    <td>
+                                                        <div class="from-field">
+                                                            <input type="text" name="uk_value" placeholder="Enter Value" [readonly]="hide_data">
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <div class="from-field">
+                                                            <input type="text" name="bust_value" placeholder="Enter Value" [readonly]="hide_data">
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <div class="from-field">
+                                                            <input type="text" name="waist_value" placeholder="Enter Value" [readonly]="hide_data">
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <div class="from-field">
+                                                            <input type="text" name="hip_value" placeholder="Enter Value" [readonly]="hide_data">
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td><b>5XL</b></td>
+                                                    <td>
+                                                        <div class="from-field">
+                                                            <input type="text" name="uk_value" placeholder="Enter Value" [readonly]="hide_data">
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <div class="from-field">
+                                                            <input type="text" name="bust_value" placeholder="Enter Value" [readonly]="hide_data">
+                                                        </div> 
+                                                    </td>
+                                                    <td>
+                                                        <div class="from-field">
+                                                            <input type="text" name="waist_value" placeholder="Enter Value" [readonly]="hide_data">
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <div class="from-field">
+                                                            <input type="text" name="hip_value" placeholder="Enter Value" [readonly]="hide_data">
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td><b>6XL</b></td>
+                                                    <td>
+                                                        <div class="from-field">
+                                                            <input type="text" name="uk_value" placeholder="Enter Value" [readonly]="hide_data">
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <div class="from-field">
+                                                            <input type="text" name="bust_value" placeholder="Enter Value" [readonly]="hide_data">
+                                                        </div> 
+                                                    </td>
+                                                    <td>
+                                                        <div class="from-field">
+                                                            <input type="text" name="waist_value" placeholder="Enter Value" [readonly]="hide_data">
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <div class="from-field">
+                                                            <input type="text" name="hip_value" placeholder="Enter Value" [readonly]="hide_data">
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Men/Kids std chart -->
+                            <div class="col-12 col-sm-12 col-md-12 col-lg-12">
+                                <div class="profile-info-card">
+                                    <div class="info-card-title d-flex space-between">
+                                        <h4>Men/Kids std chart</h4>
+                                    </div>
+                                    <div class="menkids-charts">
+                                        <div class="row pd-b-20">
+                                            <div class="in-cms"><span class="in" >In</span><mat-slide-toggle (click)="onClick($event, 'cms')"></mat-slide-toggle><span class="cms">Cms</span></div>
+                                        </div>
+                                        <table>
+                                            <thead>
+                                                <th>(in inches)</th>
+                                                <th>Chest</th>
+                                                <th>Waist</th>
+                                                <th>Neck</th>
+                                                <th>Hip</th>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td><b>XS</b></td>
+                                                    <td>
+                                                        <div class="from-field">
+                                                            <input type="text" name="chest_value" placeholder="Enter Value" [readonly]="hide_data">
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <div class="d-flex justify-content-center align-items-center">
+                                                            <div class="from-field waist_hip">
+                                                                <input type="text" name="waist_min" placeholder="Min" [readonly]="hide_data">
+                                                            </div>&nbsp; - &nbsp;<div class="from-field waist_hip">
+                                                                <input type="text" name="waist_max" placeholder="Max" [readonly]="hide_data">
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <div class="from-field">
+                                                            <input type="text" name="neck_value" placeholder="Enter Value" [readonly]="hide_data">
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <div class="d-flex justify-content-center align-items-center">
+                                                            <div class="from-field waist_hip">
+                                                                <input type="text" name="hip_min" placeholder="Min" [readonly]="hide_data">
+                                                            </div>&nbsp; - &nbsp;<div class="from-field waist_hip">
+                                                                <input type="text" name="hip_max" placeholder="Max" [readonly]="hide_data">
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td><b>S</b></td>
+                                                    <td>
+                                                        <div class="from-field">
+                                                            <input type="text" name="chest_value" placeholder="Enter Value" [readonly]="hide_data">
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <div class="d-flex justify-content-center align-items-center">
+                                                            <div class="from-field waist_hip">
+                                                                <input type="text" name="waist_min" placeholder="Min" [readonly]="hide_data">
+                                                            </div>&nbsp; - &nbsp;<div class="from-field waist_hip">
+                                                                <input type="text" name="waist_max" placeholder="Max" [readonly]="hide_data">
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <div class="from-field">
+                                                            <input type="text" name="neck_value" placeholder="Enter Value" [readonly]="hide_data">
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <div class="d-flex justify-content-center align-items-center">
+                                                            <div class="from-field waist_hip">
+                                                                <input type="text" name="hip_min" placeholder="Min" [readonly]="hide_data">
+                                                            </div>&nbsp; - &nbsp;<div class="from-field waist_hip">
+                                                                <input type="text" name="hip_max" placeholder="Max" [readonly]="hide_data">
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td><b>M</b></td>
+                                                    <td>
+                                                        <div class="from-field">
+                                                            <input type="text" name="chest_value" placeholder="Enter Value" [readonly]="hide_data">
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <div class="d-flex justify-content-center align-items-center">
+                                                            <div class="from-field waist_hip">
+                                                                <input type="text" name="waist_min" placeholder="Min" [readonly]="hide_data">
+                                                            </div>&nbsp; - &nbsp;<div class="from-field waist_hip">
+                                                                <input type="text" name="waist_max" placeholder="Max" [readonly]="hide_data">
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <div class="from-field">
+                                                            <input type="text" name="neck_value" placeholder="Enter Value" [readonly]="hide_data">
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <div class="d-flex justify-content-center align-items-center">
+                                                            <div class="from-field waist_hip">
+                                                                <input type="text" name="hip_min" placeholder="Min" [readonly]="hide_data">
+                                                            </div>&nbsp; - &nbsp;<div class="from-field waist_hip">
+                                                                <input type="text" name="hip_max" placeholder="Max" [readonly]="hide_data">
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td><b>L</b></td>
+                                                    <td>
+                                                        <div class="from-field">
+                                                            <input type="text" name="chest_value" placeholder="Enter Value" [readonly]="hide_data">
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <div class="d-flex justify-content-center align-items-center">
+                                                            <div class="from-field waist_hip">
+                                                                <input type="text" name="waist_min" placeholder="Min" [readonly]="hide_data">
+                                                            </div>&nbsp; - &nbsp;<div class="from-field waist_hip">
+                                                                <input type="text" name="waist_max" placeholder="Max" [readonly]="hide_data">
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <div class="from-field">
+                                                            <input type="text" name="neck_value" placeholder="Enter Value" [readonly]="hide_data">
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <div class="d-flex justify-content-center align-items-center">
+                                                            <div class="from-field waist_hip">
+                                                                <input type="text" name="hip_min" placeholder="Min" [readonly]="hide_data">
+                                                            </div>&nbsp; - &nbsp;<div class="from-field waist_hip">
+                                                                <input type="text" name="hip_max" placeholder="Max" [readonly]="hide_data">
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td><b>XL</b></td>
+                                                    <td>
+                                                        <div class="from-field">
+                                                            <input type="text" name="chest_value" placeholder="Enter Value" [readonly]="hide_data">
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <div class="d-flex justify-content-center align-items-center">
+                                                            <div class="from-field waist_hip">
+                                                                <input type="text" name="waist_min" placeholder="Min" [readonly]="hide_data">
+                                                            </div>&nbsp; - &nbsp;<div class="from-field waist_hip">
+                                                                <input type="text" name="waist_max" placeholder="Max" [readonly]="hide_data">
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <div class="from-field">
+                                                            <input type="text" name="neck_value" placeholder="Enter Value" [readonly]="hide_data">
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <div class="d-flex justify-content-center align-items-center">
+                                                            <div class="from-field waist_hip">
+                                                                <input type="text" name="hip_min" placeholder="Min" [readonly]="hide_data">
+                                                            </div>&nbsp; - &nbsp;<div class="from-field waist_hip">
+                                                                <input type="text" name="hip_max" placeholder="Max" [readonly]="hide_data">
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td><b>XXL</b></td>
+                                                    <td>
+                                                        <div class="from-field">
+                                                            <input type="text" name="chest_value" placeholder="Enter Value" [readonly]="hide_data">
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <div class="d-flex justify-content-center align-items-center">
+                                                            <div class="from-field waist_hip">
+                                                                <input type="text" name="waist_min" placeholder="Min" [readonly]="hide_data">
+                                                            </div>&nbsp; - &nbsp;<div class="from-field waist_hip">
+                                                                <input type="text" name="waist_max" placeholder="Max" [readonly]="hide_data">
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <div class="from-field">
+                                                            <input type="text" name="neck_value" placeholder="Enter Value" [readonly]="hide_data">
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <div class="d-flex justify-content-center align-items-center">
+                                                            <div class="from-field waist_hip">
+                                                                <input type="text" name="hip_min" placeholder="Min" [readonly]="hide_data">
+                                                            </div>&nbsp; - &nbsp;<div class="from-field waist_hip">
+                                                                <input type="text" name="hip_max" placeholder="Max" [readonly]="hide_data">
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td><b>3XL</b></td>
+                                                    <td>
+                                                        <div class="from-field">
+                                                            <input type="text" name="chest_value" placeholder="Enter Value" [readonly]="hide_data">
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <div class="d-flex justify-content-center align-items-center">
+                                                            <div class="from-field waist_hip">
+                                                                <input type="text" name="waist_min" placeholder="Min" [readonly]="hide_data">
+                                                            </div>&nbsp; - &nbsp;<div class="from-field waist_hip">
+                                                                <input type="text" name="waist_max" placeholder="Max" [readonly]="hide_data">
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <div class="from-field">
+                                                            <input type="text" name="neck_value" placeholder="Enter Value" [readonly]="hide_data">
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <div class="d-flex justify-content-center align-items-center">
+                                                            <div class="from-field waist_hip">
+                                                                <input type="text" name="hip_min" placeholder="Min" [readonly]="hide_data">
+                                                            </div>&nbsp; - &nbsp;<div class="from-field waist_hip">
+                                                                <input type="text" name="hip_max" placeholder="Max" [readonly]="hide_data">
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td><b>4XL</b></td>
+                                                    <td>
+                                                        <div class="from-field">
+                                                            <input type="text" name="chest_value" placeholder="Enter Value" [readonly]="hide_data">
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <div class="d-flex justify-content-center align-items-center">
+                                                            <div class="from-field waist_hip">
+                                                                <input type="text" name="waist_min" placeholder="Min" [readonly]="hide_data">
+                                                            </div>&nbsp; - &nbsp;<div class="from-field waist_hip">
+                                                                <input type="text" name="waist_max" placeholder="Max" [readonly]="hide_data">
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <div class="from-field">
+                                                            <input type="text" name="neck_value" placeholder="Enter Value" [readonly]="hide_data">
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <div class="d-flex justify-content-center align-items-center">
+                                                            <div class="from-field waist_hip">
+                                                                <input type="text" name="hip_min" placeholder="Min" [readonly]="hide_data">
+                                                            </div>&nbsp; - &nbsp;<div class="from-field waist_hip">
+                                                                <input type="text" name="hip_max" placeholder="Max" [readonly]="hide_data">
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td><b>5XL</b></td>
+                                                    <td>
+                                                        <div class="from-field">
+                                                            <input type="text" name="chest_value" placeholder="Enter Value" [readonly]="hide_data">
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <div class="d-flex justify-content-center align-items-center">
+                                                            <div class="from-field waist_hip">
+                                                                <input type="text" name="waist_min" placeholder="Min" [readonly]="hide_data">
+                                                            </div>&nbsp; - &nbsp;<div class="from-field waist_hip">
+                                                                <input type="text" name="waist_max" placeholder="Max" [readonly]="hide_data">
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <div class="from-field">
+                                                            <input type="text" name="neck_value" placeholder="Enter Value" [readonly]="hide_data">
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <div class="d-flex justify-content-center align-items-center">
+                                                            <div class="from-field waist_hip">
+                                                                <input type="text" name="hip_min" placeholder="Min" [readonly]="hide_data">
+                                                            </div>&nbsp; - &nbsp;<div class="from-field waist_hip">
+                                                                <input type="text" name="hip_max" placeholder="Max" [readonly]="hide_data">
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td><b>6XL</b></td>
+                                                    <td>
+                                                        <div class="from-field">
+                                                            <input type="text" name="chest_value" placeholder="Enter Value" [readonly]="hide_data">
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <div class="d-flex justify-content-center align-items-center">
+                                                            <div class="from-field waist_hip">
+                                                                <input type="text" name="waist_min" placeholder="Min" [readonly]="hide_data">
+                                                            </div>&nbsp; - &nbsp;<div class="from-field waist_hip">
+                                                                <input type="text" name="waist_max" placeholder="Max" [readonly]="hide_data">
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <div class="from-field">
+                                                            <input type="text" name="neck_value" placeholder="Enter Value" [readonly]="hide_data">
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <div class="d-flex justify-content-center align-items-center">
+                                                            <div class="from-field waist_hip">
+                                                                <input type="text" name="hip_min" placeholder="Min" [readonly]="hide_data">
+                                                            </div>&nbsp; - &nbsp;<div class="from-field waist_hip">
+                                                                <input type="text" name="hip_max" placeholder="Max" [readonly]="hide_data">
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Save Button -->
+                            <div class="col-12 col-sm-12 col-md-12 col-lg-12" *ngIf="hide_data == false">
+                                <div class="btn-content">
+                                    <div class="width-160 mr-r-15">
+                                        <button class="save-button" mat-raised-button type="submit" [disabled]="!profileEdit.valid">Save</button>
+                                    </div>
+                                    <div class="width-160">
+                                        <button class="submit-button" mat-raised-button [disabled]="!profileEdit.valid" >Submit</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </section>
+    </div>
+</div>
+

@@ -1,0 +1,177 @@
+<div class="page-wrraper">
+    <!-- page navigation start -->
+    <div class="page-navigation">
+        <div class="container">
+            <div class="d-flex justify-content-between">
+                <div class="page-name">Report</div>
+                <div class="page-links">
+                    <span>Home</span>&nbsp;<span>/</span>&nbsp;<span>REPORT</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- page navigation end -->
+    <div class="container">
+        <section class="report">
+            <div class="products-header">
+                <div class="products-tittle" id="order1">
+                    NOVEMBER
+                </div>
+                <div class="price-content" id="order2">
+                    <div class="d-flex mr-30">
+                        <div>
+                            <span class="price">Sale Price</span>
+                        </div>
+                        <div>
+                            <span class="value">₹4800000 /-</span>
+                        </div>
+                    </div>
+                    <div class="d-flex mr-30">
+                        <div>
+                            <span class="price">Sale Price</span>
+                        </div>
+                        <div>
+                            <span class="value">₹4800000 /-</span>
+                        </div>
+                    </div>
+                    <div class="d-flex mr-30">
+                        <div>
+                            <span class="price">Sale Price</span>
+                        </div>
+                        <div>
+                            <span class="value">₹4800000 /-</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="products-filter" id="order3">
+                    <button class="fab-btn" mat-fab aria-label="calender">
+                        <mat-form-field appearance="fill">      
+                            <mat-label>Enter a date range</mat-label>      
+                            <mat-date-range-input [rangePicker]="picker">      
+                              <input matStartDate placeholder="Start date">      
+                              <input matEndDate placeholder="End date">      
+                            </mat-date-range-input>      
+                            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>      
+                            <mat-date-range-picker #picker></mat-date-range-picker>      
+                          </mat-form-field>  
+                        <img src="assets/images/calender.png">
+                    </button>
+                    <button  mat-button [matMenuTriggerFor]="filterMenu" class="fab-btn" mat-fab aria-label="Filter Product">
+                        <img src="assets/images/filter.png">
+                    </button>
+                    <mat-menu #filterMenu="matMenu" xPosition="before">
+                        <button mat-menu-item>Low stock (2)</button>
+                        <button mat-menu-item>Out of stock (3)</button>
+                        <button mat-menu-item>Newest First</button>
+                        <button mat-menu-item>Oldest First</button>
+                    </mat-menu>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 col-xl-4">
+                    <div class="report-card card1" (click)="pdf_modal(pdfModal)">
+                        <div class="report-content">
+                            <div class="report-img">
+                                <span>+2</span>
+                                <img src="assets/images/product/16.jpg" />
+                            </div>
+                            <div class="report-details">
+                                <span>Order ID</span><br>
+                                <span>OR167525625</span>
+                                <div class="order-date">
+                                    <div>
+                                        <span>Order Status</span><br>
+                                        <span>Shipped</span>
+                                    </div>
+                                    <div>
+                                        <span>Order Date</span><br>
+                                        <span>12 May 2022</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="report-footer">
+                          <div>
+                            <p>Sale Price</p>
+                            <span>480/-</span>
+                          </div>
+                          <div>
+                            <p>Share Amount</p>
+                            <span>48/-</span>
+                          </div>
+                          <div>
+                            <p>Amount</p>
+                            <span>432/-</span>
+                          </div>
+                          <div>
+                            <p>Payment</p>
+                            <span class="payment-date red-color">12 May 2022</span>
+                          </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 col-xl-4">
+                    <div class="report-card card2" (click)="pdf_modal(pdfModal)">
+                        <div class="report-content">
+                            <div class="report-img">
+                                <span>+4</span>
+                                <img src="assets/images/product/16.jpg" />
+                            </div>
+                            <div class="report-details">
+                                <span>Order ID</span><br>
+                                <span>OR167525625</span>
+                                <div class="order-date">
+                                    <div>
+                                        <span>Order Status</span><br>
+                                        <span>Shipped</span>
+                                    </div>
+                                    <div>
+                                        <span>Order Date</span><br>
+                                        <span>12 May 2022</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="report-footer">
+                          <div>
+                            <p>Sale Price</p>
+                            <span>480/-</span>
+                          </div>
+                          <div>
+                            <p>Share Amount</p>
+                            <span>48/-</span>
+                          </div>
+                          <div>
+                            <p>Amount</p>
+                            <span>432/-</span>
+                          </div>
+                          <div>
+                            <p>Payment</p>
+                            <span class="payment-date red-color">12 May 2022</span>
+                          </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 col-xl-4"></div>
+            </div>
+        </section>
+    </div>
+</div>
+<!-- message modal -->
+<ng-template #pdfModal let-modal>
+    <div class="pdf_modal">
+        <div class="modal-header close-hiden">
+            <div></div>
+            <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+                <i class="fa fa-times" aria-hidden="true"></i>
+            </button>
+        </div>
+        <div class="modal-body">
+            <iframe src="https://slicedinvoices.com/pdf/wordpress-pdf-invoice-plugin-sample.pdf"  height="500px">
+            </iframe>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-outline-dark download_invoice-btn" ><span class="material-icons"> sim_card_download </span>Download Invoice</button>
+        </div>
+    </div>
+</ng-template>

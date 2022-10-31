@@ -1,0 +1,181 @@
+<div class="page-wrraper">
+    <!-- page navigation start -->
+    <div class="page-navigation">
+        <div class="container">
+            <div class="d-flex justify-content-between">
+                <div class="page-name">Product View</div>
+                <div class="page-links">
+                    <span>Home</span>&nbsp;<span>/</span>&nbsp;<span>Product Management</span>&nbsp;<span>/</span>&nbsp;<span>Product View</span> 
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- page navigation end -->
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-6 col-xl-6">
+                <div class="img-section">
+                    <img [src]="productDetail?.images[0].name" />
+                </div>
+            </div>
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-6 col-xl-6">
+                <div class="product-view-card">
+                    <div class="p-30 b-b-2">
+                        <div class="status-content">
+                            <div class="row align-item">
+                                <div class="col-5 col-sm-5 col-md-5 col-lg-5 col-xl-5">
+                                    <p >Status: <span class="status">{{productDetail?.adminStatus}}</span></p>
+                                </div>
+                                <div class="col-5 col-sm-5 col-md-5 col-lg-5 col-xl-5">
+                                    <p>Stock: <span>18</span></p>
+                                </div>
+                                <div class="col-2 col-sm-2 col-md-2 col-lg-2 col-xl-2">
+                                    <!-- <div class="edit-details" [routerLink]="['/', 'add-product']">
+                                        <img src="assets/images/pencil.png">
+                                    </div> -->
+                                    <button [routerLink]="['/', 'product','edit', productId]" mat-button class="fab-btn" mat-fab aria-label="Filter Product">
+                                        <img src="assets/images/pencil.png">
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="ptl-15 b-b-2">
+                        <div class="profile-content">
+                            <div class="row">
+                                <div class="col-9 col-sm-9 col-md-9 col-lg-9">
+                                    <h1>{{designerprofiledata?.designerName}}</h1>
+                                    <div class="profile-annoucement">
+                                        <img _ngcontent-lvb-c178="" src="assets/images/campaign.png">
+                                        {{designerprofiledata?.boutiqueProfile?.boutiqueName}}
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <h2>Follower: 1</h2>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <h2>Products: 5</h2>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-3 col-sm-3 col-md-3 col-lg-3">
+                                    <div class="profile-img"><img [src]="designerprofiledata?.designerProfile?.profilePic!= null ? designerprofiledata?.designerProfile?.profilePic : 'assets/images/noimage.jpg'"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="ptl-15 b-b-2">
+                        <div class="MRP-content">
+                            <p>{{productDetail?.productName}}</p>
+                            <h1>₹{{productDetail?.price?.indPrice?.dealPrice}} <span>₹{{productDetail?.price?.indPrice?.mrp}}</span></h1>
+                            
+                        </div>
+                    </div>
+                    <div class="ptl-15 b-b-2">
+                        <div class="age-content">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="d-flex">
+                                        <div class="gender">
+                                            <p>Gender</p>
+                                            <span>{{productDetail?.gender}}</span>
+                                        </div>
+                                        <div class="age">
+                                            <p>Age</p>
+                                            <span>{{productDetail?.age?.min}} - {{productDetail?.age?.max}}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="ptl-15 b-b-2">
+                        <div class="type-content">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="type">
+                                        <p>Type</p>
+                                        <span>CHURIDAR</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="ptl-15 b-b-2">
+                        <div class="size-content">
+                            <div class="size">
+                                <p>Size</p>
+                                <label [for]="size?.sizeType" [ngClass]="{'active':sizeactive == size?.sizeType}" *ngFor="let size of productDetail?.standeredSOH;let i = index;" (click)="activeSize('size',size.sizeType)"><span>{{size?.sizeType}}</span></label>
+                                <!-- <input type="radio" name="size" id="XXL" value="XXL" />
+                                <label for="XXL"><span>XXL</span></label>  -->
+
+                                <button class="custom-button" mat-raised-button>CUSTOM</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="ptl-15 b-b-2">
+                        <div class="color-content">
+                            <div class="color">
+                                <span>Colour</span>
+                                <!-- <div > -->
+                                    <!-- <input type="radio" [id]="color.colour" [value]="color.colour"   /> -->
+                                    <label [for]="color.colour" [ngClass]="{'active':coloractive == color?.colour}" *ngFor="let color of productDetail?.images;let i = index;" class="d-flex" [ngClass]="{'d-none': !color?.colour}"><span [style.background]='color.colour' (click)="activeSize('color',color.colour)"></span></label>
+                                <!-- </div> -->
+                            </div>
+                        </div>
+                    </div>
+                    <div class="ptl-15 b-b-2">
+                        <div class="shopping-content">
+                            <div class="shopping">
+                                <img src="assets/images/cart.png" /><span>Free shopping</span>
+                            </div>
+                            <div class="shopping">
+                                <img src="assets/images/cod.png" /><span>Cash on delivery</span>
+                            </div>
+                            <div class="shopping">
+                                <img src="assets/images/easy-return.png" /><span>Easy return</span>
+                            </div>
+                            <div class="shopping">
+                                <img src="assets/images/cart2.png" /><span>Free Shopping only for india</span>
+                            </div>
+                            <div class="shopping">
+                                <img src="assets/images/returnable.png" /><span>Custom made orders are not returnable</span>
+                            </div>
+                            <p class="p-text">Note: Shipping in 20days.</p>
+                        </div>
+                        <h1 class="specifications-head">Specifications</h1>
+                    </div>
+                    <div class="ptl-15 b-b-2 p-b-5">
+                        <h1 class="product-head">Product Description</h1>
+                    </div>
+                    <div class="ptl-15 b-b-2 p-b-5">
+                        <p class="desc-text">{{productDetail?.specifications?.productDetails}}</p>
+                        <h1 class="fit-head">Fit</h1>
+                    </div>
+                    <div class="ptl-15 b-b-2 p-b-5">
+                        <p class="desc-text">{{productDetail?.specifications?.fittingInformation}}</p>
+                        <h1 class="style-head">Style</h1>
+                    </div>
+                    <div class="ptl-15 b-b-2 p-b-5">
+                        <p class="style-text">{{productDetail?.specifications?.style}}</p>
+                        <h1 class="composition-head">Composition</h1>
+                    </div>
+                    <div class="ptl-15 b-b-2 p-b-5">
+                        <p class="composition-text">Cotton {{productDetail?.specifications?.composition?.cotton}}%</p>
+                        <p class="composition-text">Polystar {{productDetail?.specifications?.composition?.polystar}}%</p>
+                        <h1 class="washing-head">Washing Instruction</h1>
+                    </div>
+                    <div class="ptl-15 b-b-0 b-b-2 p-b-5">
+                        <p class="washing-text">{{productDetail?.specifications?.washingInformation}}</p>
+                    </div>
+                    <div class="share-content">
+                        <span class="share-title">Share it : </span>
+                        <span class="share-icon"><img src="assets/images/facebook.png"></span>
+                        <span class="share-icon"><img src="assets/images/instagram.png"></span>
+                        <span class="share-icon"><img src="assets/images/twitter.png"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

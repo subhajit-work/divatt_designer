@@ -1,0 +1,971 @@
+<div class="page-wrraper">
+    <!-- page navigation start -->
+    <div class="page-navigation">
+       <div class="container">
+           <div class="d-flex justify-content-between">
+               <div class="page-name">Product</div>
+               <div class="page-links">
+                   <span>Home</span>&nbsp;<span>/</span>&nbsp;<span>Product Management</span>&nbsp;<span>/</span>&nbsp;<span>Add Product</span> 
+               </div>
+           </div>
+       </div>
+   </div>
+   <!-- page navigation end -->
+   <div class="container">
+       <form #productAddForm="ngForm" (ngSubmit)="onSubmitProductAdd(productAddForm)">
+           <div class="row">
+               <div class="col-xs-12 col-sm-12 col-md-12 col-lg-6 col-xl-6">
+
+                   <ngb-carousel *ngIf="imageArray.length">
+                       <ng-template ngbSlide *ngFor="let img of imageArray; index as i;">
+                           <div class="add-product">
+                               <div class="add-card-inner">
+                                   <input class="invisible position-absolute w-0 h-0" [id]="i" type="file"  accept="image/*" (change)="handleInputChange($event, i)" required>
+                                   <label [for]="i">
+                                       <img [src]="img.name!= null ? img.name : 'assets/images/plus-cercle.png?rev=1627018'"
+                                       class="uplodeimgpev cursor-pointer" [ngClass]="{'big-img' : imageArray.length}"/>
+                                   </label>
+                               </div>
+                           </div>
+                       </ng-template>
+
+                       <!-- <ng-template ngbSlide>
+                           <div class="add-product">
+                               <div class="add-card-inner">
+                                   <input class="invisible position-absolute w-0 h-0" id="singleFileUploadback" type="file" name="imageUrl" accept="image/*" (change)="handleInputChange($event,'back')">
+                                       <label class="" for="singleFileUploadback">
+                                       <img [src]="back" class="uplodeimgpev cursor-pointer" *ngIf="back" [ngClass]="{'big-img' : back }"/>
+                                       <img src="assets/images/plus-cercle.png" *ngIf="!back" class="cursor-pointer" alt="" > 
+                                     </label>
+                               </div>
+                           </div>
+                       </ng-template>
+                       <ng-template ngbSlide>
+                           <div class="add-product">
+                               <div class="add-card-inner">
+                                   <input class="invisible position-absolute w-0 h-0" id="singleFileUploadside" type="file" name="imageUrl" accept="image/*" (change)="handleInputChange($event,'side')">
+                                       <label class="" for="singleFileUploadside">
+                                       <img [src]="side" class="uplodeimgpev cursor-pointer"  *ngIf="side" [ngClass]="{'big-img' : side }"/>
+                                       <img src="assets/images/plus-cercle.png" *ngIf="!side" class="cursor-pointer" alt="">
+                                     </label>
+                               </div>
+                           </div>
+                       </ng-template>
+                       <ng-template ngbSlide>
+                           <div class="add-product">
+                               <div class="add-card-inner">
+                                   <input class="invisible position-absolute w-0 h-0" id="singleFileUploadclose" type="file" name="imageUrl" accept="image/*" (change)="handleInputChange($event,'close')">
+                                       <label class="" for="singleFileUploadclose">
+                                       <img [src]="close" class="uplodeimgpev cursor-pointer" *ngIf="close" [ngClass]="{'big-img' : close }"/>
+                                       <img src="assets/images/plus-cercle.png" *ngIf="!close" class="cursor-pointer" alt="">
+                                       </label>
+                               </div>
+                           </div>
+                       </ng-template> -->
+                   </ngb-carousel>
+
+                   <div class="add-product" *ngIf="!imageArray.length">
+                       <div class="add-card-inner">
+                           <input class="invisible position-absolute w-0 h-0" id="singleFileUploadfront" type="file" name="imageUrl"  accept="image/*" (change)="handleInputChange($event, '')" required>
+                               <label  for="singleFileUploadfront">
+                               <img src="assets/images/plus-cercle.png?rev=1627018"
+                               class="uplodeimgpev cursor-pointer"/>
+                           </label>
+                       </div>
+                   </div>
+
+                   <div class="width-150 mr-auto mt-20">
+                       <a class="addimage-button" mat-raised-button (click)="singleFileUploadfront.click()" [disabled]="uploder"><span>ADD IMAGE </span><mat-spinner *ngIf="uplodeimgloader"></mat-spinner></a>
+                       <input class="invisible position-absolute w-0 h-0" #singleFileUploadfront  type="file" name="imageUrl" accept="image/*" (change)="handleInputChange($event, index)" required>
+                       <!-- <label  for="singleFileUploadfront">
+                           <img [src]="productdtl.front!= null ? productdtl.front : 'assets/images/plus-cercle.png?rev=1627018'"
+                           class="uplodeimgpev cursor-pointer"
+                           [ngClass]="{'big-img' : productdtl.front!= null }"/>
+                       </label> -->
+                   </div>
+
+                   <div class="other-content not-in-mobile">
+                       <h2>Product Stock And Pricing</h2>
+                       <div class="row p-rl-20">
+                           <div class="col-sm-6 col-xs-12 col-md-6 col-lg-6 col-xl-4">
+                               <div class="toggle-btn-content">
+                                   <span class="product-text-size">Customization : </span>
+                                   <div class="on-off-toggle">
+                                       <input class="on-off-toggle__input" type="checkbox"
+                                       id="customization"
+                                       name="customization"
+                                       value="true"
+                                       [(ngModel)]="productdtl.customization"
+                                       (ngModelChange)="customization1(productdtl.customization)"
+                                        />
+                                       <label for="customization" class="on-off-toggle__slider"></label>
+                                   </div>
+                               </div>
+                           </div>
+                           <div class="col-sm-6 col-xs-12 col-md-6 col-lg-6 col-xl-4">
+                               <div class="toggle-btn-content">
+                                   <span class="product-text-size">Design customization : </span>
+                                   <div class="on-off-toggle">
+                                       <input class="on-off-toggle__input" type="checkbox"
+                                       id="d_customization"
+                                       name="d_customization"
+                                       value="true"
+                                       [(ngModel)]="productdtl.d_customization" />
+                                       <label for="d_customization" class="on-off-toggle__slider"></label>
+                                   </div>
+                               </div>
+                           </div>
+                           <div class="col-sm-6 col-xs-12 col-md-6 col-lg-6 col-xl-4">
+                               <div class="toggle-btn-content">
+                                   <span class="product-text-size">Return accept : </span>
+                                   <div class="on-off-toggle">
+                                       <input class="on-off-toggle__input" type="checkbox"
+                                       id="r_accept"
+                                       name="r_accept"
+                                       value="true"
+                                       [(ngModel)]="productdtl.r_accept" />
+                                       <label for="r_accept" class="on-off-toggle__slider"></label>
+                                   </div>
+                               </div>
+                           </div>
+                           <div class="col-sm-6 col-xs-12 col-md-6 col-lg-6 col-xl-4">
+                               <div class="toggle-btn-content">
+                                   <span class="product-text-size">Cash on Delivery : </span>
+                                   <div class="on-off-toggle">
+                                       <input class="on-off-toggle__input" type="checkbox"
+                                       id="c_on_delivery"
+                                       name="c_on_delivery"
+                                       value="true"
+                                       [(ngModel)]="productdtl.c_on_delivery" />
+                                       <label for="c_on_delivery" class="on-off-toggle__slider"></label>
+                                   </div>
+                               </div>
+                           </div>
+                           <div class="col-sm-6 col-xs-12 col-md-6 col-lg-6 col-xl-4">
+                               <div class="toggle-btn-content">
+                                   <span class="product-text-size">Cancle accept : </span>
+                                   <div class="on-off-toggle">
+                                       <input class="on-off-toggle__input" type="checkbox"
+                                       id="c_accept"
+                                       name="c_accept"
+                                       value="true"
+                                       [(ngModel)]="productdtl.c_accept" />
+                                       <label for="c_accept" class="on-off-toggle__slider"></label>
+                                   </div>
+                               </div>
+                           </div>
+                           <div class="col-sm-6 col-xs-12 col-md-6 col-lg-6 col-xl-4">
+                               <div class="toggle-btn-content">
+                                   <span class="product-text-size">Gift Wrap : </span>
+                                   <div class="on-off-toggle">
+                                       <input class="on-off-toggle__input" type="checkbox"
+                                       id="gift_wrap"
+                                       name="gift_wrap"
+                                       value="true"
+                                       [(ngModel)]="productdtl.gift_wrap" />
+                                       <label for="gift_wrap" class="on-off-toggle__slider"></label>
+                                   </div>
+                               </div>
+                           </div>
+                           <div class="col-sm-12 col-md-12 col-lg-12">
+                               <mat-form-field appearance="outline">
+                                   <mat-label>Design customization features</mat-label>
+                                   <textarea matInput
+                                   name="d_custom_features"
+                                   [(ngModel)]="productdtl.d_custom_features"
+                                   clearInput required></textarea>
+                               </mat-form-field>
+                           </div>
+                           <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                               <mat-form-field appearance="outline">
+                                   <mat-label>Stock</mat-label>
+                                   <input matInput
+                                   type="text"
+                                   name="stock"
+                                   [(ngModel)]="productdtl.stock"
+                                   clearInput required >
+                               </mat-form-field>
+                           </div>
+                           <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                               <mat-form-field appearance="outline">
+                                   <mat-label>Notify L/S</mat-label>
+                                   <input matInput
+                                   type="text"
+                                   name="notify_ls"
+                                   [(ngModel)]="productdtl.notify_ls"
+                                   clearInput required >
+                               </mat-form-field>
+                           </div>
+                           <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                               <mat-form-field appearance="outline">
+                                   <mat-label>Size</mat-label>
+                                   <mat-select 
+                                   [multiple]="false" 
+                                   name="sizeType" 
+                                   [(ngModel)]="productdtl.sizeType"
+                                   (ngModelChange)="toggleDisabled(productdtl.sizeType)"
+                                   required MatInput>
+                                     <mat-option *ngFor="let mesorment of mesormentList" [value]="mesorment.name">{{mesorment.name}}</mat-option>
+                                   </mat-select>
+                               </mat-form-field>
+                           </div>
+                           <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                               <mat-form-field appearance="outline">
+                                   <mat-label>Select Price Type</mat-label>
+                                   <mat-select
+                                   [multiple]="false" 
+                                   name="priceType" 
+                                   [(ngModel)]="productdtl.priceType"
+                                   (ngModelChange)="ngsel(productdtl.priceType)"
+                                   MatInput>
+                                   <mat-option *ngFor="let item of pricetyplist" [value]="item.id">{{item.name}}</mat-option>
+                                   </mat-select>
+                               </mat-form-field>
+                           </div>
+                           <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                               <mat-form-field appearance="outline">
+                                   <mat-label>Select HSN</mat-label>
+                                   <mat-select
+                                   [multiple]="false" 
+                                   (ngModelChange)="hsnSelected($event)"
+                                   name="hsnData" 
+                                   [(ngModel)]="productdtl.hsnData"
+                                   MatInput>
+                                   <input class="search-input" name="search" placeholder="search..." (keyup)="onKey($event.target)">
+                                   <mat-option *ngFor="let item of HSNlist" [value]="item.id">{{item?.hsnCode}}</mat-option>
+                                   </mat-select>
+                               </mat-form-field>
+                           </div>
+                       </div>
+                       <div class="hr"></div>
+                       <h2>In Indian Price(₹)</h2>
+                       <div class="row p-rl-20">
+                           <div class="col-md-3">
+                               <mat-form-field appearance="outline">
+                                   <mat-label>MRP</mat-label>
+                                   <input matInput type="number" min="0" [(ngModel)]="productdtl.indmrp" name="indmrp" (change)="salePriceCalculation(productdtl.amount,productdtl.inddiscountType, productdtl.indmrp, productdtl.inddiscountValue, 'indiaPrice')" clearInput required/>
+                               </mat-form-field>
+                           </div>
+                           <div class="col-md-3">
+                               <mat-form-field appearance="outline">
+                                   <mat-label>Sale Price</mat-label>
+                                   <input matInput 
+                                   type="number"  
+                                   min="0"
+                                   name="indealPrice" 
+                                   [(ngModel)]="productdtl.indealPrice" 
+                                   required/>
+                               </mat-form-field>
+                           </div>
+                           <div class="col-md-3">
+                               <mat-form-field appearance="outline">
+                                   <mat-label>Select Discount Type</mat-label>
+                                   <mat-select 
+                                   [multiple]="false" 
+                                   (ngModelChange)="salePriceCalculation(productdtl.amount,productdtl.inddiscountType, productdtl.indmrp, productdtl.inddiscountValue, 'indiaPrice')"
+                                   name="inddiscountType" 
+                                   [(ngModel)]="productdtl.inddiscountType"
+                                   MatInput>
+                                       <mat-option *ngFor="let item of discountTypelist" [value]="item.id">{{item.name}}</mat-option>
+                                   </mat-select>
+                               </mat-form-field>
+                           </div>
+                           <div class="col-md-3">
+                               <mat-form-field appearance="outline">
+                                   <mat-label>Discount Value
+                                   <span *ngIf="productdtl.inddiscountType == 'Flat'">in price</span><span *ngIf="productdtl.inddiscountType == 'Percentage'">in Percentage</span></mat-label>
+                                       <input matInput 
+                                       [disabled]="productdtl.inddiscountType == 'None'"
+                                       min="0" 
+                                       type="number" 
+                                       [(ngModel)]="productdtl.inddiscountValue" name="inddiscountValue" 
+                                       (keyup)="salePriceCalculation(productdtl.amount,productdtl.inddiscountType, productdtl.indmrp, productdtl.inddiscountValue, 'indiaPrice')" 
+                                       required/>
+                                       <mat-hint *ngIf="productdtl.indealPriceError == true">
+                                         Discount Value is <strong>Higher</strong> than MRP.
+                                       </mat-hint>
+                               </mat-form-field>
+                           </div>
+                           <div class="col-md-6">
+                               <div class="form-group">
+                                   <mat-form-field appearance="outline">
+                                     <mat-label>Deal Start Form</mat-label>
+                                     <input matInput type="date"
+                                       [(ngModel)]="productdtl.indeal_start"   name="indeal_start"
+                                       (change)="changeDateFormat('indealstart',productdtl.indeal_start)" required>
+                                   </mat-form-field>
+                                 </div>
+                           </div>
+                           <input type="hidden" name="indealstart" [(ngModel)]="productdtl.indealstart" required>
+                           <div class="col-md-6">
+                               <div class="form-group">
+                                   <mat-form-field appearance="outline">
+                                     <mat-label>Deal End to</mat-label>
+                                     <input matInput type="date" [(ngModel)]="productdtl.indeal_end" name="indeal_end"
+                                     (change)="changeDateFormat('indealend',productdtl.indeal_end)" required>
+                                   </mat-form-field>
+                                 </div>
+                           </div>
+                           <input type="hidden" name="indealend" [(ngModel)]="productdtl.indealend">
+                       </div>
+                   </div>
+                   <div class="product_details-contect mobile-only">
+                       <h2>Product Category</h2>
+                       <div class="row p-rl-20">
+                           <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                               <mat-form-field appearance="outline">
+                                   <mat-label>Select Category</mat-label>
+                                   <mat-select
+                                   [multiple]="false" 
+                                   name="categoryId" 
+                                   [(ngModel)]="productdtl.categoryId"
+                                   (ngModelChange)="categorySelected(productdtl.categoryId,'onchange')"
+                                   MatInput>
+                                   <mat-option *ngFor="let item of categoryslist" [value]="item.id">{{item?.categoryName}}</mat-option>
+                                   </mat-select>
+                               </mat-form-field>
+                           </div>
+                           <mat-form-field appearance="outline">
+                               <mat-label>Select Subcategory</mat-label>
+                               <mat-select
+                               [multiple]="false" 
+                               (ngModelChange)="SubcatSelected(productdtl.subCategoryId,'onchange')"
+                               name="subCategoryId" 
+                               [(ngModel)]="productdtl.subCategoryId"
+                               MatInput>
+                                   <mat-option *ngFor="let item of subcategorylist" [value]="item.id">{{item?.categoryName}}</mat-option>
+                               </mat-select>
+                           </mat-form-field>
+                       </div>
+                       <div class="hr"></div>
+                       <h2>Product Details</h2>
+                       <div class="row p-rl-20">
+
+
+                           <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12">
+                               <mat-form-field appearance="outline">
+                                   <mat-label>Product Name</mat-label>
+                                   <input matInput
+                                   type="text" 
+                                   name="productName" 
+                                   [(ngModel)]="productdtl.productName"
+                                   clearInput required >
+                               </mat-form-field>
+                           </div>
+                           <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12">
+                               <mat-form-field appearance="outline">
+                                   <mat-label>Product Description</mat-label>
+                                   <textarea matInput
+                                   type="text"
+                                   name="productDescription"
+                                   [(ngModel)]="productdtl.productDescription"
+                                   rows="4" 
+                                   clearInput required></textarea>
+                               </mat-form-field>
+                           </div>
+                           <div class="col-md-12">
+                               <mat-form-field appearance="outline">
+                                   <mat-label>Fitting Information</mat-label>
+                                   <textarea matInput
+                                   type="text"
+                                   name="fittingInformation"
+                                   [(ngModel)]="productdtl.fittingInformation"
+                                   rows="4" 
+                                   clearInput required></textarea>
+                               </mat-form-field>
+                           </div>
+                           <div class="col-md-12">
+                               <mat-form-field appearance="outline">
+                                   <mat-label>Occassion</mat-label>
+                                   <input matInput
+                                   type="text" 
+                                   name="Style" 
+                                   [(ngModel)]="productdtl.Style"
+                                   clearInput required >
+                               </mat-form-field>
+                           </div>
+                           <div class="col-md-12">
+                               <mat-form-field appearance="outline">
+                                   <mat-label>Composition</mat-label>
+                                   <textarea matInput 
+                                   type="text"
+                                   name="cotton_polyster" 
+                                   [(ngModel)]="productdtl.cotton_polyster"
+                                   placeholder="Cotton % Polyster %" 
+                                   clearInput required></textarea>
+                               </mat-form-field>
+                           </div>
+                           <div class="col-md-12">
+                               <mat-form-field appearance="outline">
+                                   <mat-label>Washing care</mat-label>
+                                   <textarea matInput 
+                                   name="washingInformation" 
+                                   [(ngModel)]="productdtl.washingInformation"
+                                   clearInput required></textarea>
+                               </mat-form-field>
+                           </div>
+                           
+                           <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                               <mat-form-field appearance="outline">
+                                   <mat-label>Purchase min qty</mat-label>
+                                   <input matInput 
+                                   type="number" 
+                                   min="0"   
+                                   name="purchaseMin" 
+                                   [(ngModel)]="productdtl.purchaseMin" 
+                                   clearInput required >
+                               </mat-form-field>
+                           </div>
+                           <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                               <mat-form-field appearance="outline">
+                                   <mat-label>Purchase max qty</mat-label>
+                                   <input matInput
+                                   type="number" 
+                                   min="0"   
+                                   name="purchaseMax" 
+                                   [(ngModel)]="productdtl.purchaseMax" 
+                                   clearInput required >
+                               </mat-form-field>
+                           </div>
+                           <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-6">
+                               <div class="color-content">
+                                   <div class="color">
+                                       <span>Colour</span>
+
+                                       <input type="radio"
+                                       name="color" 
+                                       id="red" 
+                                       value="red" 
+                                       [(ngModel)]="productdtl.colour"
+                                       (ngModelChange)="changeColor(productdtl.colour)"
+                                       />
+                                       <label for="red"><span class="red"></span></label>
+
+                                       <input type="radio"
+                                       name="color" 
+                                       id="green" 
+                                       value="green"
+                                       [(ngModel)]="productdtl.colour"
+                                       (ngModelChange)="changeColor(productdtl.colour)"
+                                       />
+                                       <label for="green"><span class="green"></span></label>
+       
+                                       <input type="radio" 
+                                       name="color" 
+                                       id="yellow" 
+                                       value="yellow"
+                                       [(ngModel)]="productdtl.colour"
+                                       (ngModelChange)="changeColor(productdtl.colour)"
+                                       />
+                                       <label for="yellow"><span class="yellow"></span></label>
+       
+                                       <input type="radio" 
+                                       name="color" 
+                                       id="olive" 
+                                       value="olive"
+                                       [(ngModel)]="productdtl.colour"
+                                       (ngModelChange)="changeColor(productdtl.colour)"
+                                       />
+                                       <label for="olive"><span class="olive"></span></label>
+       
+                                       <input type="radio" 
+                                       name="color" 
+                                       id="orange" 
+                                       value="orange"
+                                       [(ngModel)]="productdtl.colour"
+                                       (ngModelChange)="changeColor(productdtl.colour)"
+                                       />
+                                       <label for="orange"><span class="orange"></span></label>
+       
+                                       <!-- <input type="radio" name="color" id="teal" />
+                                       <label for="teal"><span class="teal"></span></label>
+       
+                                       <input type="radio" name="color" id="blue" />
+                                       <label for="blue"><span class="blue"></span></label>
+       
+                                       <input type="radio" name="color" id="violet" />
+                                       <label for="violet"><span class="violet"></span></label>
+       
+                                       <input type="radio" name="color" id="purple" />
+                                       <label for="purple"><span class="purple"></span></label>
+       
+                                       <input type="radio" name="color" id="pink" />
+                                       <label for="pink"><span class="pink"></span></label> -->
+                                   </div>
+                               </div>
+                           </div>
+                       </div>
+                       <div class="hr"></div>
+                       <h2>Other Details</h2>
+                       <div class="row p-rl-20">
+                           <div class="col-md-6">
+                               <mat-form-field appearance="outline">
+                                   <mat-label>Product Weight</mat-label>
+                                   <input matInput 
+                                   type="text" 
+                                   name="product_weight"
+                                   [(ngModel)]="productdtl.product_weight" 
+                                   clearInput required >
+                               </mat-form-field>
+                           </div>
+                           <div class="col-md-6">
+                               <mat-form-field appearance="outline">
+                                   <mat-label>Shipment Time</mat-label>
+                                   <input matInput 
+                                   type="text" 
+                                   name="shipment_time"
+                                   [(ngModel)]="productdtl.shipment_time"  
+                                   clearInput required >
+                               </mat-form-field>
+                           </div>
+                       </div>
+                   </div>
+               </div>
+               <div class="col-xs-12 col-sm-12 col-md-12 col-lg-6 col-xl-6">
+                   <div class="product_details-contect not-in-mobile">
+                       <h2>Product Category</h2>
+                       <div class="row p-rl-20">
+                           <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                               <mat-form-field appearance="outline">
+                                   <mat-label>Select Category</mat-label>
+                                   <mat-select
+                                   [multiple]="false" 
+                                   name="categoryId" 
+                                   [(ngModel)]="productdtl.categoryId"
+                                   (ngModelChange)="categorySelected(productdtl.categoryId,'onchange')"
+                                   MatInput>
+                                   <mat-option *ngFor="let item of categoryslist" [value]="item.id">{{item?.categoryName}}</mat-option>
+                                   </mat-select>
+                               </mat-form-field>
+                           </div>
+                           <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                               <mat-form-field appearance="outline">
+                                   <mat-label>Select Subcategory</mat-label>
+                                   <mat-select
+                                   [multiple]="false" 
+                                   (ngModelChange)="SubcatSelected(productdtl.subCategoryId,'onchange')"
+                                   name="subCategoryId" 
+                                   [(ngModel)]="productdtl.subCategoryId"
+                                   MatInput>
+                                       <mat-option *ngFor="let item of subcategorylist" [value]="item.id">{{item?.categoryName}}</mat-option>
+                                   </mat-select>
+                               </mat-form-field>
+                           </div>
+                       </div>
+                       <div class="hr"></div>
+                       <h2>Product Details</h2>
+                       <div class="row p-rl-20">
+                           <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12">
+                               <mat-form-field appearance="outline">
+                                   <mat-label>Product Name</mat-label>
+                                   <input matInput
+                                   type="text" 
+                                   name="productName" 
+                                   [(ngModel)]="productdtl.productName"
+                                   clearInput required >
+                               </mat-form-field>
+                           </div>
+                           <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12">
+                               <mat-form-field appearance="outline">
+                                   <mat-label>Product Description</mat-label>
+                                   <textarea matInput
+                                   type="text"
+                                   name="productDescription"
+                                   [(ngModel)]="productdtl.productDescription"
+                                   rows="4" 
+                                   clearInput required></textarea>
+                               </mat-form-field>
+                           </div>
+                           <div class="col-md-12">
+                               <mat-form-field appearance="outline">
+                                   <mat-label>Fitting Information</mat-label>
+                                   <textarea matInput
+                                   type="text"
+                                   name="fittingInformation"
+                                   [(ngModel)]="productdtl.fittingInformation"
+                                   rows="4" 
+                                   clearInput required></textarea>
+                               </mat-form-field>
+                           </div>
+                           <div class="col-md-12">
+                               <mat-form-field appearance="outline">
+                                   <mat-label>Occassion</mat-label>
+                                   <input matInput
+                                   type="text" 
+                                   name="Style" 
+                                   [(ngModel)]="productdtl.Style"
+                                   clearInput required >
+                               </mat-form-field>
+                           </div>
+                           <div class="col-md-12">
+                               <mat-form-field appearance="outline">
+                                   <mat-label>Composition</mat-label>
+                                   <textarea matInput 
+                                   type="text"
+                                   name="cotton_polyster" 
+                                   [(ngModel)]="productdtl.cotton_polyster"
+                                   placeholder="Cotton % Polyster %" 
+                                   clearInput required></textarea>
+                               </mat-form-field>
+                           </div>
+                           <div class="col-md-12">
+                               <mat-form-field appearance="outline">
+                                   <mat-label>Washing care</mat-label>
+                                   <textarea matInput 
+                                   name="washingInformation" 
+                                   [(ngModel)]="productdtl.washingInformation"
+                                   clearInput required></textarea>
+                               </mat-form-field>
+                           </div>
+                           
+                           <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                               <mat-form-field appearance="outline">
+                                   <mat-label>Purchase min qty</mat-label>
+                                   <input matInput 
+                                   type="number" 
+                                   min="0"   
+                                   name="purchaseMin" 
+                                   [(ngModel)]="productdtl.purchaseMin" 
+                                   clearInput required >
+                               </mat-form-field>
+                           </div>
+                           <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                               <mat-form-field appearance="outline">
+                                   <mat-label>Purchase max qty</mat-label>
+                                   <input matInput
+                                   type="number" 
+                                   min="0"   
+                                   name="purchaseMax" 
+                                   [(ngModel)]="productdtl.purchaseMax" 
+                                   clearInput required >
+                               </mat-form-field>
+                           </div>
+                           <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-6">
+                               <div class="color-content">
+                                   <span>Colour</span>
+                                   <div class="color" *ngFor="let item of colourlist">
+                                       <input type="radio"
+                                       name="color" 
+                                       [id]="item.colorName" 
+                                       [value]="item.colorName" 
+                                       [(ngModel)]="productdtl.colour"
+                                       (ngModelChange)="changeColor(productdtl.colour)"
+                                       />
+                                       <label [for]="item.colorName"><span [style.backgroundColor]="item.colorValue" [ngClass]="{'border-active' : active == item.colorName}"></span></label>
+
+                                       <!-- <input type="radio"
+                                       name="color" 
+                                       id="green" 
+                                       value="green"
+                                       [(ngModel)]="productdtl.colour"
+                                       (ngModelChange)="changeColor(productdtl.colour)"
+                                       />
+                                       <label for="green"><span class="green"></span></label>
+       
+                                       <input type="radio" 
+                                       name="color" 
+                                       id="yellow" 
+                                       value="yellow"
+                                       [(ngModel)]="productdtl.colour"
+                                       (ngModelChange)="changeColor(productdtl.colour)"
+                                       />
+                                       <label for="yellow"><span class="yellow"></span></label>
+       
+                                       <input type="radio" 
+                                       name="color" 
+                                       id="olive" 
+                                       value="olive"
+                                       [(ngModel)]="productdtl.colour"
+                                       (ngModelChange)="changeColor(productdtl.colour)"
+                                       />
+                                       <label for="olive"><span class="olive"></span></label>
+       
+                                       <input type="radio" 
+                                       name="color" 
+                                       id="orange" 
+                                       value="orange"
+                                       [(ngModel)]="productdtl.colour"
+                                       (ngModelChange)="changeColor(productdtl.colour)"
+                                       />
+                                       <label for="orange"><span class="orange"></span></label> -->
+       
+                                       <!-- <input type="radio" name="color" id="teal" />
+                                       <label for="teal"><span class="teal"></span></label>
+       
+                                       <input type="radio" name="color" id="blue" />
+                                       <label for="blue"><span class="blue"></span></label>
+       
+                                       <input type="radio" name="color" id="violet" />
+                                       <label for="violet"><span class="violet"></span></label>
+       
+                                       <input type="radio" name="color" id="purple" />
+                                       <label for="purple"><span class="purple"></span></label>
+       
+                                       <input type="radio" name="color" id="pink" />
+                                       <label for="pink"><span class="pink"></span></label> -->
+                                   </div>
+                               </div>
+                           </div>
+                       </div>
+                       <div class="hr"></div>
+                       <h2>Other Details</h2>
+                       <div class="row p-rl-20">
+                           <div class="col-md-6">
+                               <mat-form-field appearance="outline">
+                                   <mat-label>Product Weight</mat-label>
+                                   <input matInput 
+                                   type="text" 
+                                   name="product_weight"
+                                   [(ngModel)]="productdtl.product_weight" 
+                                   clearInput required >
+                               </mat-form-field>
+                           </div>
+                           <div class="col-md-6">
+                               <mat-form-field appearance="outline">
+                                   <mat-label>Shipment Time</mat-label>
+                                   <input matInput 
+                                   type="text" 
+                                   name="shipment_time"
+                                   [(ngModel)]="productdtl.shipment_time"  
+                                   clearInput required >
+                               </mat-form-field>
+                           </div>
+                       </div>
+                   </div>
+                   <div class="other-content mobile-only">
+                       <h2>Product Stock And Pricing</h2>
+                       <div class="row p-rl-20">
+                           <div class="col-sm-6 col-xs-12 col-md-6 col-lg-6 col-xl-4">
+                               <div class="toggle-btn-content">
+                                   <span class="product-text-size">Customization : </span>
+                                   <div class="on-off-toggle">
+                                       <input class="on-off-toggle__input" type="checkbox"
+                                       id="customization"
+                                       name="customization"
+                                       value="true"
+                                       [(ngModel)]="productdtl.customization"
+                                       (ngModelChange)="customization1(productdtl.customization)"
+                                       />
+                                       <label for="customization" class="on-off-toggle__slider"></label>
+                                   </div>
+                               </div>
+                           </div>
+                           <div class="col-sm-6 col-xs-12 col-md-6 col-lg-6 col-xl-4">
+                               <div class="toggle-btn-content">
+                                   <span class="product-text-size">Design customization : </span>
+                                   <div class="on-off-toggle">
+                                       <input class="on-off-toggle__input" type="checkbox"
+                                       id="d_customization"
+                                       name="d_customization"
+                                       value="true"
+                                       [(ngModel)]="productdtl.d_customization" />
+                                       <label for="d_customization" class="on-off-toggle__slider"></label>
+                                   </div>
+                               </div>
+                           </div>
+                           <div class="col-sm-6 col-xs-12 col-md-6 col-lg-6 col-xl-4">
+                               <div class="toggle-btn-content">
+                                   <span class="product-text-size">Return accept : </span>
+                                   <div class="on-off-toggle">
+                                       <input class="on-off-toggle__input" type="checkbox"
+                                       id="r_accept"
+                                       name="r_accept"
+                                       value="true"
+                                       [(ngModel)]="productdtl.r_accept" />
+                                       <label for="r_accept" class="on-off-toggle__slider"></label>
+                                   </div>
+                               </div>
+                           </div>
+                           <div class="col-sm-6 col-xs-12 col-md-6 col-lg-6 col-xl-4">
+                               <div class="toggle-btn-content">
+                                   <span class="product-text-size">Cash on Delivery : </span>
+                                   <div class="on-off-toggle">
+                                       <input class="on-off-toggle__input" type="checkbox"
+                                       id="c_on_delivery"
+                                       name="c_on_delivery"
+                                       value="true"
+                                       [(ngModel)]="productdtl.c_on_delivery" />
+                                       <label for="c_on_delivery" class="on-off-toggle__slider"></label>
+                                   </div>
+                               </div>
+                           </div>
+                           <div class="col-sm-6 col-xs-12 col-md-6 col-lg-6 col-xl-4">
+                               <div class="toggle-btn-content">
+                                   <span class="product-text-size">Cancle accept : </span>
+                                   <div class="on-off-toggle">
+                                       <input class="on-off-toggle__input" type="checkbox"
+                                       id="c_accept"
+                                       name="c_accept"
+                                       value="true"
+                                       [(ngModel)]="productdtl.c_accept" />
+                                       <label for="c_accept" class="on-off-toggle__slider"></label>
+                                   </div>
+                               </div>
+                           </div>
+                           <div class="col-sm-6 col-xs-12 col-md-6 col-lg-6 col-xl-4">
+                               <div class="toggle-btn-content">
+                                   <span class="product-text-size">Gift Wrap : </span>
+                                   <div class="on-off-toggle">
+                                       <input class="on-off-toggle__input" type="checkbox"
+                                       id="gift_wrap"
+                                       name="gift_wrap"
+                                       value="true"
+                                       [(ngModel)]="productdtl.gift_wrap" />
+                                       <label for="gift_wrap" class="on-off-toggle__slider"></label>
+                                   </div>
+                               </div>
+                           </div>
+                           <div class="col-sm-12 col-md-12 col-lg-12">
+                               <mat-form-field appearance="outline">
+                                   <mat-label>Design customization features</mat-label>
+                                   <textarea matInput
+                                   name="d_custom_features"
+                                   [(ngModel)]="productdtl.d_custom_features"
+                                   clearInput required></textarea>
+                               </mat-form-field>
+                           </div>
+                           <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                               <mat-form-field appearance="outline">
+                                   <mat-label>Stock</mat-label>
+                                   <input matInput
+                                   type="text"
+                                   name="stock"
+                                   [(ngModel)]="productdtl.stock"
+                                   clearInput required >
+                               </mat-form-field>
+                           </div>
+                           <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                               <mat-form-field appearance="outline">
+                                   <mat-label>Notify L/S</mat-label>
+                                   <input matInput
+                                   type="text"
+                                   name="notify_ls"
+                                   [(ngModel)]="productdtl.notify_ls"
+                                   clearInput required >
+                               </mat-form-field>
+                           </div>
+                           <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                               <mat-form-field appearance="outline">
+                                   <mat-label>Size</mat-label>
+                                   <mat-select 
+                                   [multiple]="false" 
+                                   name="sizeType" 
+                                   [(ngModel)]="productdtl.sizeType"
+                                   (ngModelChange)="toggleDisabled(productdtl.sizeType)"
+                                   required MatInput>
+                                     <mat-option *ngFor="let mesorment of mesormentList" [value]="mesorment.name">{{mesorment.name}}</mat-option>
+                                   </mat-select>
+                               </mat-form-field>
+                           </div>
+                           <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                               <mat-form-field appearance="outline">
+                                   <mat-label>Select Price Type</mat-label>
+                                   <mat-select
+                                   [multiple]="false" 
+                                   name="priceType" 
+                                   [(ngModel)]="productdtl.priceType"
+                                   (ngModelChange)="ngsel(productdtl.priceType)"
+                                   MatInput>
+                                   <mat-option *ngFor="let item of pricetyplist" [value]="item.id">{{item.name}}</mat-option>
+                                   </mat-select>
+                               </mat-form-field>
+                           </div>
+                           <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                               <mat-form-field appearance="outline">
+                                   <mat-label>Select HSN</mat-label>
+                                   <mat-select
+                                   [multiple]="false" 
+                                   (ngModelChange)="hsnSelected($event)"
+                                   name="hsnData" 
+                                   [(ngModel)]="productdtl.hsnData"
+                                   MatInput>
+                                   <input class="search-input" placeholder="search..." (keyup)="onKey($event)">
+                                   <mat-option *ngFor="let item of HSNlist" [value]="item.id">{{item?.hsnCode}}</mat-option>
+                                   </mat-select>
+                               </mat-form-field>
+                           </div>
+                       </div>
+                       <div class="hr"></div>
+                       <h2>In Indian Price(₹)</h2>
+                       <div class="row p-rl-20">
+                           <div class="col-md-3">
+                               <mat-form-field appearance="outline">
+                                   <mat-label>MRP</mat-label>
+                                   <input matInput type="number" min="0" [(ngModel)]="productdtl.indmrp" name="indmrp" (change)="salePriceCalculation(productdtl.amount,productdtl.inddiscountType, productdtl.indmrp, productdtl.inddiscountValue, 'indiaPrice')" clearInput required/>
+                               </mat-form-field>
+                           </div>
+                           <div class="col-md-3">
+                               <mat-form-field appearance="outline">
+                                   <mat-label>Sale Price</mat-label>
+                                   <input matInput 
+                                   type="number"  
+                                   min="0"
+                                   name="indealPrice" 
+                                   [(ngModel)]="productdtl.indealPrice" 
+                                   required/>
+                               </mat-form-field>
+                           </div>
+                           <div class="col-md-3">
+                               <mat-form-field appearance="outline">
+                                   <mat-label>Select Discount Type</mat-label>
+                                   <mat-select 
+                                   [multiple]="false" 
+                                   (ngModelChange)="salePriceCalculation(productdtl.amount,productdtl.inddiscountType, productdtl.indmrp, productdtl.inddiscountValue, 'indiaPrice')"
+                                   name="inddiscountType" 
+                                   [(ngModel)]="productdtl.inddiscountType"
+                                   MatInput>
+                                       <mat-option *ngFor="let item of discountTypelist" [value]="item.id">{{item.name}}</mat-option>
+                                   </mat-select>
+                               </mat-form-field>
+                           </div>
+                           <div class="col-md-3">
+                               <mat-form-field appearance="outline">
+                                   <mat-label>Sale Price</mat-label>
+                                   <input matInput 
+                                   type="number"  
+                                   min="0"
+                                   name="indealPrice" 
+                                   [(ngModel)]="productdtl.indealPrice" 
+                                   required/>
+                               </mat-form-field>
+                           </div>
+                           <div class="col-md-6">
+                               <div class="form-group">
+                                   <mat-form-field appearance="outline">
+                                     <mat-label>Deal Start Form</mat-label>
+                                     <input matInput type="date"
+                                       [(ngModel)]="productdtl.indeal_start"   name="indeal_start"
+                                       (change)="changeDateFormat('indealstart',productdtl.indeal_start)" required>
+                                   </mat-form-field>
+                                 </div>
+                           </div>
+                           <input type="hidden" name="indealstart" [(ngModel)]="productdtl.indealstart" required>
+                           <div class="col-md-6">
+                               <div class="form-group">
+                                   <mat-form-field appearance="outline">
+                                     <mat-label>Deal End to</mat-label>
+                                     <input matInput type="date" [(ngModel)]="productdtl.indeal_end" name="indeal_end"
+                                     (change)="changeDateFormat('indealend',productdtl.indeal_end)" required>
+                                   </mat-form-field>
+                                 </div>
+                           </div>
+                           <input type="hidden" name="indealend" [(ngModel)]="productdtl.indealend">
+                       </div>
+                   </div>
+                   <div class="row">
+                       <div class="col-md-12">
+                           <div class="upload-btn">
+                               <div class="width-160 mr-r-15">
+                                   <button class="upload-button" mat-raised-button type="submit" >Upload</button>
+                               </div>
+                               <div class="width-160">
+                                   <button class="cancle-button" mat-raised-button [routerLink]="['/','home']">Cancel</button>
+                               </div>
+                           </div>
+                       </div>
+                   </div>
+               </div>
+           </div>
+       </form>
+   </div>
+</div>

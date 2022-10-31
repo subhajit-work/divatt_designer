@@ -1,0 +1,421 @@
+<div class="page-wrraper">
+     <!-- page navigation start -->
+     <div class="page-navigation">
+        <div class="container">
+            <div class="d-flex justify-content-between">
+                <div class="page-name">ORDER LIST</div>
+                <div class="page-links">
+                    <span>Home</span>&nbsp;<span>/</span>&nbsp;<span>Order Management List</span>&nbsp;<span>/</span>&nbsp;<span>Order List</span> 
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- page navigation end -->
+    <div class="container">
+        <section class="order">
+            <div class="products-header">
+                <div class="products-tab not-in-tab not-in-mobile" id="order1">
+                    <div class="togglebuttons">
+                        <mat-button-toggle-group name="fontStyle" aria-label="Font Style">
+                            <mat-button-toggle value="New" class="mat-button-toggle-checked" (click)="onClick('TAB','New')" [ngClass]="{'mat-button-toggle-checked': tab === 'New'}">New <span class="numbers">({{allCounts?.new}})</span></mat-button-toggle>
+
+                            <mat-button-toggle value="Orders" (click)="onClick('TAB','Orders')" [ngClass]="{'mat-button-toggle-checked': tab === 'Orders'}">Orders <span class="numbers">({{allCounts?.orders}})</span></mat-button-toggle>
+                            <mat-button-toggle value="Packed" (click)="onClick('TAB','Packed')" [ngClass]="{'mat-button-toggle-checked': tab === 'Packed'}">Packed <span class="numbers">({{allCounts?.packed}})</span></mat-button-toggle>
+                            <mat-button-toggle value="Shipped" (click)="onClick('TAB','Shipped')" [ngClass]="{'mat-button-toggle-checked': tab === 'Shipped'}">Shipped <span class="numbers">({{allCounts?.shipped}})</span></mat-button-toggle>
+                            <mat-button-toggle value="Delievred" (click)="onClick('TAB','Delievred')" [ngClass]="{'mat-button-toggle-checked': tab === 'Delievred'}">Delievred <span class="numbers">({{allCounts?.delivered}})</span></mat-button-toggle>
+                            <mat-button-toggle value="Return" (click)="onClick('TAB','Return')" [ngClass]="{'mat-button-toggle-checked': tab === 'Return'}">Return <span class="numbers">({{allCounts?.return}})</span></mat-button-toggle>
+                        </mat-button-toggle-group>
+                    </div>
+                </div>
+                <div id="order1" class="tab-only mobile-only width-100">
+                    <select class="select-tab" (change)="onClick('dropdown',$event)">
+                        <option value="new" selected>New ({{allCounts?.new}})</option>
+                        <option value="orders">Orders ({{allCounts?.orders}})</option>
+                        <option value="packed">Packed ({{allCounts?.packed}})</option>
+                        <option value="shipped">Shipped ({{allCounts?.shipped}})</option>
+                        <option value="delievred">Delievred ({{allCounts?.delivered}})</option>
+                        <option value="return">Return ({{allCounts?.return}})</option>
+                    </select> 
+                </div>
+                <div class="products-filter" id="order2">
+                    <div class="responsive-filtter">
+                        <button class="fab-btn search-hiden" mat-fab>
+                            <mat-icon class="search-btn" (click)="active()">search</mat-icon></button>
+                        <button class="fab-btn" [ngClass]="{'active': active_class}" mat-fab aria-label="Filter Product" >
+                            <input type="search" value="" placeholder="Search..." class="search-input" [(ngModel)]="searchTerm" (input)="searchingData($event)">
+                            <div class="clear-btn"><mat-icon (click)="clear()">clear</mat-icon></div>
+                            <mat-icon class="search-btn">search</mat-icon>
+                        </button>  
+                        <button class="fab-btn" mat-fab aria-label="calender">
+                            <mat-form-field appearance="fill">      
+                                <mat-label>Enter a date range</mat-label>      
+                                <mat-date-range-input [rangePicker]="picker">      
+                                  <input matStartDate placeholder="Start date">      
+                                  <input matEndDate placeholder="End date">      
+                                </mat-date-range-input>      
+                                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>      
+                                <mat-date-range-picker #picker></mat-date-range-picker>      
+                              </mat-form-field>  
+                            <img src="assets/images/calender.png">
+                        </button>
+                        <button  mat-button [matMenuTriggerFor]="filterMenu" class="fab-btn" mat-fab aria-label="Filter Product">
+                            <mat-icon> sort</mat-icon>
+                        </button>
+                        <mat-menu #filterMenu="matMenu" xPosition="before">
+                            <button mat-menu-item>Low stock (2)</button>
+                            <button mat-menu-item>Out of stock (3)</button>
+                            <button mat-menu-item>Newest First</button>
+                            <button mat-menu-item>Oldest First</button>
+                        </mat-menu>
+                    </div>
+                </div>
+            </div>
+            <div class="row" infiniteScroll [infiniteScrollDistance]="0.1" (scrolled)="onScroll()" *ngIf="productsList.length">
+                <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-4" *ngFor="let item of productsList;let i = index;">
+                    <div class="product-card">
+                        <div class="product-content" [routerLink]="['/', 'order-item',item?.orderId]">
+                            <div class="product-img">
+                                <mat-icon>redeem</mat-icon>
+                                <img src="assets/images/product/16.jpg" />
+                            </div>
+                            <div class="product-details">
+                                <p>{{item?.productName}}</p>
+                                <div class="order-date">
+                                    <div>
+                                        <span>Order ID</span><br>
+                                        <span>{{item?.orderId}}</span>
+                                    </div>
+                                    <div>
+                                        <span>Order Date</span><br>
+                                        <span>{{item?.createdOn | date :  "dd MMM yy"}}</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="porduct-footer">
+                            <div class="row">
+                                <div class="col-3 col-sm-3 col-md-3 col-lg-3">
+                                    <p>Design Cust</p>
+                                    <span>Yes</span>
+                                </div>
+                                <div class="col-3 col-sm-3 col-md-3 col-lg-3">
+                                    <p>Sale Price</p>
+                                    <span>₹{{item?.salesPrice}} /-</span>
+                                </div>
+                                <div class="col-2 col-sm-2 col-md-2 col-lg-2">
+                                    <p>SIZE</p>
+                                    <span>{{item?.size}}</span>
+                                </div>
+                                <div class="col-4 col-sm-4 col-md-4 col-lg-4">
+                                    <p>Shipping</p>
+                                    <span class="color-date">31 June 2022</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row pb-3">
+                    <div class="position-relative">
+                        <!-- <div class="loading-container">
+                            <div class="spinner">
+                              <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                                <circle cx="50" cy="50" r="46" />
+                              </svg>
+                            </div>
+                            <h1 class="loading-title">Loading...</h1>
+                        </div> -->
+                        <div class="loader2" *ngIf="isListLoading"><span></span></div>
+                    </div>
+                    
+                </div>
+                <div class="row justify-content-center empty-cart-cls"  [ngClass]="{'d-none': isListLoading}">
+                    <div class="text-center">
+                      <img src="assets/images/no-product-found.png" alt="" *ngIf="noProductFound">
+                      <h2 *ngIf="noProductFound"><b>No Product Found.</b></h2>
+                      <h2 *ngIf="nomoreProductFound"><b>No more Product Found.</b></h2>
+                    </div>  
+                </div>
+                <!-- <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-4">
+                    <div class="product-card">
+                        <div class="product-content" [routerLink]="['/', 'order-item']">
+                            <div class="product-img">
+                                <mat-icon>redeem</mat-icon>
+                                <img src="assets/images/product/16.jpg" />
+                            </div>
+                            <div class="product-details">
+                                <p>CHANDERI FLORAL EMBROIDERED KURTA SET</p>
+                                <div class="order-date">
+                                    <div>
+                                        <span>Order ID</span><br>
+                                        <span>OR167525625</span>
+                                    </div>
+                                    <div>
+                                        <span>Order Date</span><br>
+                                        <span>12 May 2022</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="porduct-footer">
+                            <div class="row">
+                                <div class="col-3 col-sm-3 col-md-3 col-lg-3">
+                                    <p>Design Cust</p>
+                                    <span>Yes</span>
+                                </div>
+                                <div class="col-3 col-sm-3 col-md-3 col-lg-3">
+                                    <p>Sale Price</p>
+                                    <span>₹480 /-</span>
+                                </div>
+                                <div class="col-2 col-sm-2 col-md-2 col-lg-2">
+                                    <p>SIZE</p>
+                                    <span>M</span>
+                                </div>
+                                <div class="col-4 col-sm-4 col-md-4 col-lg-4">
+                                    <p>Shipping</p>
+                                    <span class="color-date">31 June 2022</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-4">
+                    <div class="product-card">
+                        <div class="product-content" [routerLink]="['/', 'order-item']">
+                            <div class="product-img">
+                                <mat-icon>redeem</mat-icon>
+                                <img src="assets/images/product/16.jpg" />
+                            </div>
+                            <div class="product-details">
+                                <p>CHANDERI FLORAL EMBROIDERED KURTA SET</p>
+                                <div class="order-date">
+                                    <div>
+                                        <span>Order ID</span><br>
+                                        <span>OR167525625</span>
+                                    </div>
+                                    <div>
+                                        <span>Order Date</span><br>
+                                        <span>12 May 2022</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="porduct-footer">
+                            <div class="row">
+                                <div class="col-3 col-sm-3 col-md-3 col-lg-3">
+                                    <p>Design Cust</p>
+                                    <span>Yes</span>
+                                </div>
+                                <div class="col-3 col-sm-3 col-md-3 col-lg-3">
+                                    <p>Sale Price</p>
+                                    <span>₹480 /-</span>
+                                </div>
+                                <div class="col-2 col-sm-2 col-md-2 col-lg-2">
+                                    <p>SIZE</p>
+                                    <span (click)="custom_modal(customchart)"> <mat-icon>info</mat-icon> Cust</span>
+                                </div>
+                                <div class="col-4 col-sm-4 col-md-4 col-lg-4">
+                                    <p>Shipping</p>
+                                    <span class="color-date">31 June 2022</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div> -->
+            </div>
+        </section>
+    </div>
+</div>
+
+
+<!-- shipped order -->
+<ng-template #customchart let-modal>
+    <div class="customchart_modal">
+        <div class="modal-header">
+            <h4 class="modal-title" id="modal-basic-title">Standard Measurement Charts</h4>
+            <h3>WOMEN</h3>
+            <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+                <i class="fa fa-times" aria-hidden="true"></i>
+            </button>
+          </div>
+        <div class="modal-body">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="row">
+                        <div class="col-md-9 pb-13">
+                            <span class="name">Neck</span>
+                        </div>
+                        <div class="col-md-2 pb-13">
+                            <span class="size">12 inch</span>
+                        </div>
+                        <div class="col-md-9 pb-13">
+                            <span class="name">Shoulder</span>
+                        </div>
+                        <div class="col-md-2 pb-13">
+                            <span class="size">12 inch</span>
+                        </div>
+                        <div class="col-md-9 pb-13">
+                            <span class="name">Bust</span>
+                        </div>
+                        <div class="col-md-2 pb-13">
+                            <span class="size">12 inch</span>
+                        </div>
+                        <div class="col-md-9 pb-13">
+                            <span class="name">Rib cage (under bust)</span>
+                        </div>
+                        <div class="col-md-2 pb-13">
+                            <span class="size">12 inch</span>
+                        </div>
+                        <div class="col-md-9 pb-13">
+                            <span class="name">Side neck point to bust apex (front neck depth)</span>
+                        </div>
+                        <div class="col-md-2 pb-13">
+                            <span class="size">12 inch</span>
+                        </div>
+                        <div class="col-md-9 pb-13">
+                            <span class="name">Back side neck point to waist (back neck depth)</span>
+                        </div>
+                        <div class="col-md-2 pb-13">
+                            <span class="size">12 inch</span>
+                        </div>
+                        <div class="col-md-9 pb-13">
+                            <span class="name">Thigh</span>
+                        </div>
+                        <div class="col-md-2 pb-13">
+                            <span class="size">12 inch</span>
+                        </div>
+                        <div class="col-md-9 pb-13">
+                            <span class="name">Knee</span>
+                        </div>
+                        <div class="col-md-2 pb-13">
+                            <span class="size">12 inch</span>
+                        </div>
+                        <div class="col-md-9 pb-13">
+                            <span class="name">Calf circumference</span>
+                        </div>
+                        <div class="col-md-2 pb-13">
+                            <span class="size">12 inch</span>
+                        </div>
+                        <div class="col-md-9 pb-13">
+                            <span class="name">High ankle</span>
+                        </div>
+                        <div class="col-md-2 pb-13">
+                            <span class="size">12 inch</span>
+                        </div>
+                        <div class="col-md-9 pb-13">
+                            <span class="name">Ankle</span>
+                        </div>
+                        <div class="col-md-2 pb-13">
+                            <span class="size">12 inch</span>
+                        </div>
+                        <div class="col-md-9 pb-13">
+                            <span class="name">Waist to floor (bottom length)</span>
+                        </div>
+                        <div class="col-md-2 pb-13">
+                            <span class="size">12 inch</span>
+                        </div>
+                        <div class="col-md-9 pb-13">
+                            <span class="name">Front side neck point to waist (kurta length along with waist to knee)</span>
+                        </div>
+                        <div class="col-md-2 pb-13">
+                            <span class="size">12 inch</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="row">
+                        <div class="offset-md-1 col-md-9 pb-13">
+                            <span class="name">Back width</span>
+                        </div>
+                        <div class="col-md-2 pb-13">
+                            <span class="size">12 inch</span>
+                        </div>
+                        <div class="offset-md-1 col-md-9 pb-13">
+                            <span class="name">Armscye depth</span>
+                        </div>
+                        <div class="col-md-2 pb-13">
+                            <span class="size">12 inch</span>
+                        </div>
+                        <div class="offset-md-1 col-md-9 pb-13">
+                            <span class="name">Armhole</span>
+                        </div>
+                        <div class="col-md-2 pb-13">
+                            <span class="size">12 inch</span>
+                        </div>
+                        <div class="offset-md-1 col-md-9 pb-13">
+                            <div class="name">Top arm(bicep)</div>
+                        </div>
+                        <div class="col-md-2 pb-13">
+                            <span class="size">12 inch</span>
+                        </div>
+                        <div class="offset-md-1 col-md-9 pb-13">
+                            <div class="name">Elbow</div>
+                        </div>
+                        <div class="col-md-2 pb-13">
+                            <span class="size">12 inch</span>
+                        </div>
+                        <div class="offset-md-1 col-md-9 pb-13">
+                            <div class="name">Wrist</div>
+                        </div>
+                        <div class="col-md-2 pb-13">
+                            <span class="size">12 inch</span>
+                        </div>
+                        <div class="offset-md-1 col-md-9 pb-13">
+                            <div class="name">Sleeve length</div>
+                        </div>
+                        <div class="col-md-2 pb-13">
+                            <span class="size">12 inch</span>
+                        </div>
+                        <div class="offset-md-1 col-md-9 pb-13">
+                            <div class="name">Crotch depth</div>
+                        </div>
+                        <div class="col-md-2 pb-13">
+                            <span class="size">12 inch</span>
+                        </div>
+                        <div class="offset-md-1 col-md-9 pb-13">
+                           <div class="name">Crotch length</div> 
+                        </div>
+                        <div class="col-md-2 pb-13">
+                            <span class="size">12 inch</span>
+                        </div>
+                        <div class="offset-md-1 col-md-9 pb-13">
+                            <div class="name">Waist</div>
+                        </div>
+                        <div class="col-md-2 pb-13">
+                            <span class="size">12 inch</span>
+                        </div>
+                        <div class="offset-md-1 col-md-9 pb-13">
+                            <div class="name">Hip</div>
+                        </div>
+                        <div class="col-md-2 pb-13">
+                            <span class="size">12 inch</span>
+                        </div>
+                        <div class="offset-md-1 col-md-9 pb-13">
+                            <div class="name">Top hip(low waist)</div>
+                        </div>
+                        <div class="col-md-2 pb-13">
+                            <span class="size">12 inch</span>
+                        </div>
+                        <div class="offset-md-1 col-md-9 pb-13">
+                            <div class="name">Waist to hip</div>
+                        </div>
+                        <div class="col-md-2 pb-13">
+                            <span class="size">12 inch</span>
+                        </div>
+                        <div class="offset-md-1 col-md-9 pb-13">
+                            <div class="name">Waist to knee</div>
+                        </div>
+                        <div class="col-md-2 pb-13">
+                            <span class="size">12 inch</span>
+                        </div>
+                        <div class="offset-md-1 col-md-9 pb-13">
+                            <div class="name">Knee to ankle(may be required for ankle length)</div>
+                        </div>
+                        <div class="col-md-2 pb-13">
+                            <span class="size">12 inch</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</ng-template>

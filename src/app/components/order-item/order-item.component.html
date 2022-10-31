@@ -1,0 +1,308 @@
+<div class="page-wrraper">
+    <!-- page navigation start -->
+    <div class="page-navigation">
+        <div class="container">
+            <div class="d-flex justify-content-between">
+                <div class="page-name">ORDER ITEM LIST</div>
+                <div class="page-links">
+                    <span>Home</span>&nbsp;<span>/</span>&nbsp;<span>ORDER LIST</span>&nbsp;<span>/</span>&nbsp;<span>Order Item List</span> 
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- page navigation end -->
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-6">
+                <div class="img-section">
+                    <span>+4</span>
+                    <img src="assets/images/product/16.jpg" />
+                </div>
+            </div>
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-6">
+                <div class="order-item-card">
+                    <div class="p-30 b-b-2">
+                        <div class="d-flex">
+                            <div class="order-id">
+                                <h1>Order ID</h1>
+                                <p>OR132894846767672</p>
+                            </div>
+                            <div class="order-date">
+                                <h1>Order Date</h1>
+                                <p>9 May 20222</p>
+                            </div>
+                            <div class="delivery-date">
+                                <h1>Delivery Date</h1>
+                                <p>31 June 2022</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="ptl-15 b-b-2">
+                        <div class="order-status">
+                            <h1>Order Status</h1>
+                            <div class="order-steper">
+                                <!-- progress bar all step -->
+                                <ul id="progressbar-1" class="mx-0 mt-0 mb-5 px-0 pt-0 pb-4">
+                                    <li class="step0 active" id="step1"><span
+                                        ><img src="assets/images/orders.png" />Order Verified</span></li>
+                                    <li class="step0 text-center" [ngClass]="{'active': packed_done == true}" (click)="orderpack_modal(orderpack)" id="step2"><span><img src="assets/images/packing.png" />Packed</span></li>
+                                    <li class="step0 text-center" id="step3" [ngClass]="{'active': shipped_done == true}" (click)="ordershipped_modal(ordershipped)"><span><img src="assets/images/shipment.png" />Ship</span></li>
+                                    <li class="step0  text-muted text-end" [ngClass]="{'active': delivered_done == true}" id="step4" (click)="orderdeliver_modal(orderdelivered)"><span
+                                        style="margin-right: 22px;"><img src="assets/images/deliverd.png" />Deliver</span></li>
+                                </ul>
+
+                                <!-- progress bar two step -->
+                                <!-- <ul id="progressbar-2" class="mx-0 mt-0 mb-5 px-0 pt-0 pb-4">
+                                    <li class="step0 active" id="step1"><span
+                                        ><img src="assets/images/orders.png" />Verify Orders</span></li>
+                                    <li class="step0 text-muted text-end " (click)="orders_modal(orders)" id="step4" [ngClass]="{'active': orders_done == true}"><span
+                                        style="margin-right: 22px;"><img src="assets/images/orders.png" />Orders</span></li>
+                                </ul> -->
+                            </div>
+                        </div>
+                    </div>
+                    <div class="ptl-15 b-b-2">
+                        <div class="product-details">
+                            <h1>Order Details</h1>
+                            <p>Chanderi Floral Embroidered Kurta Set</p>
+                            <div class="row">
+                                <div class="col-4 col-sm-6 col-md-3 col-lg-3">
+                                    <p>Color</p>
+                                    <div class="red"></div>
+                                </div>
+                                <div class="col-4 col-sm-6 col-md-3 col-lg-3">
+                                    <p>Size</p>
+                                    <span>L</span>
+                                </div>
+                                <div class="col-4 col-sm-6 col-md-2 col-lg-2">
+                                    <p>QTY</p>
+                                    <span>1</span>
+                                </div>
+                                <div class="col-4 col-sm-6 col-md-4 col-lg-4">
+                                    <p>Design Customization</p>
+                                    <span>YES</span>
+                                </div>
+                                <div class="col-4 col-sm-6 col-md-3 col-lg-3">
+                                    <p>Payment</p>
+                                    <span>Prepaid</span>
+                                </div>
+                                <div class="col-4 col-sm-6 col-md-3 col-lg-3">
+                                    <p>Gift Wrap</p>
+                                    <span>Yes</span>
+                                </div>
+                                <div class="col-4 col-sm-6 col-md-3 col-lg-3">
+                                    <p>Message</p>
+                                    <span><mat-icon (click)="message_modal(message)">sms</mat-icon></span>
+                                </div>
+                            </div>
+                            
+                        </div>
+                    </div>
+                    <div class="ptl-15 b-b-2">
+                        <div class="contact_invoice">
+                            <h1>Contact And Invoice</h1>
+                            <div class="row">
+                                <div class="col-6 col-sm-6 col-md-4 col-lg-4">
+                                    <p>Customer Name</p>
+                                    <span>Subhajit Manna</span>
+                                </div>
+                                <div class="col-6 col-sm-6 col-md-3 col-lg-3">
+                                    <p>Phone Number</p>
+                                    <span>9809876543<br>8798878778</span>
+                                </div>
+                                <div class="col-6 col-sm-6 col-md-5 col-lg-5">
+                                    <p>Invoice</p>
+                                    <a class="invoice-button" [href]="invoiceurl+'/'+orderId"  download mat-raised-button><span class="material-icons"> sim_card_download </span>Download Invoice</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- packed order -->
+<ng-template #orderpack let-modal>
+    <div class="packed_modal">
+        <div class="modal-header">
+            <h4 class="modal-title" id="modal-basic-title">Order Packed Form</h4>
+            <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+                <i class="fa fa-times" aria-hidden="true"></i>
+            </button>
+        </div>
+          <form>
+            <div class="modal-body">
+                <mat-checkbox class="example-margin mat-check mr-b-15"><p>Packed in Divatt Covere</p></mat-checkbox>
+                <mat-checkbox class="example-margin mat-check mr-b-15"><p>Recorded the packing video</p></mat-checkbox>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-outline-dark submit-btn" (click)="packOrder()">Submit</button>
+            </div>
+          </form>
+    </div>
+</ng-template>
+
+<!-- shipped order -->
+<ng-template #ordershipped let-modal>
+    <div class="shipped_modal">
+        <div class="modal-header">
+            <h4 class="modal-title" id="modal-basic-title">Order Shipped Form</h4>
+            <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+                <i class="fa fa-times" aria-hidden="true"></i>
+            </button>
+          </div>
+          <form>
+            <div class="modal-body">
+                <mat-form-field appearance="outline">
+                    <mat-label>Career Name</mat-label>
+                    <input matInput type="text" name="career_name" clearInput required >
+                </mat-form-field>
+                <mat-form-field appearance="outline">
+                    <mat-label>AWB Number</mat-label>
+                    <input matInput type="text" name="awb_number" clearInput required >
+                </mat-form-field>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-outline-dark submit-btn" (click)="shippedOrder()">Submit</button>
+            </div>
+          </form>
+    </div>
+</ng-template>
+
+<!-- delivered order -->
+<ng-template #orderdelivered let-modal>
+    <div class="deliver_modal">
+        <div class="modal-header">
+            <h4 class="modal-title" id="modal-basic-title">Order Deliverd Form</h4>
+            <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+                <i class="fa fa-times" aria-hidden="true"></i>
+            </button>
+          </div>
+          <form>
+            <div class="modal-body">
+                <mat-form-field appearance="outline" class="example-form-field">
+                    <mat-label>Date</mat-label>
+                    <input matInput [matDatepicker]="datepicker">
+                    <mat-datepicker-toggle matSuffix [for]="datepicker"></mat-datepicker-toggle>
+                    <mat-datepicker #datepicker>
+                      <mat-datepicker-actions>
+                        <button mat-button matDatepickerCancel>Cancel</button>
+                        <button mat-raised-button color="primary" matDatepickerApply>Apply</button>
+                      </mat-datepicker-actions>
+                    </mat-datepicker>
+                </mat-form-field>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-outline-dark submit-btn" (click)="deliveredOrder()">Submit</button>
+            </div>
+          </form>
+    </div>
+</ng-template>
+
+<!-- Verify orders -->
+<ng-template #orders let-modal>
+    <div class="orders_modal">
+        <div class="modal-header">
+            <h4 class="modal-title" id="modal-basic-title">Customization</h4>
+            <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+                <i class="fa fa-times" aria-hidden="true"></i>
+            </button>
+        </div>
+          <form>
+            <div class="modal-body">
+                <mat-checkbox class="example-margin mat-check mr-b-15"><p>Verified design customization requirements</p></mat-checkbox>
+                <mat-checkbox class="example-margin mat-check mr-b-15"><p>Verified customization sizes</p></mat-checkbox>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-outline-dark submit-btn" (click)="verify_Orders()">Submit</button>
+            </div>
+          </form>
+    </div>
+</ng-template>
+
+<!-- Message -->
+<ng-template #message let-modal>
+    <div class="message_modal">
+        <div class="modal-header">
+            <h4 class="modal-title" id="modal-basic-title">Customization</h4>
+            <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+                <i class="fa fa-times" aria-hidden="true"></i>
+            </button>
+        </div>
+          <form>
+            <div class="modal-body">
+                <div class="chat-messages">
+                    <div class="message-box-holder">
+                     <div class="message-box">
+                       Hello
+                     </div>
+                   </div>
+                   
+                   <div class="message-box-holder">
+                     <div class="message-box message-partner">
+                       Hi.
+                     </div>
+                   </div>
+                   
+                   <div class="message-box-holder">
+                     <div class="message-box">
+                       How are you doing?
+                     </div>
+                   </div>
+                   
+                   <div class="message-box-holder">
+                      
+                     <div class="message-box message-partner">
+                       I'm doing fine. How about you?
+                     </div>
+                   </div>
+                   
+                   <div class="message-box-holder">
+                     <div class="message-box">
+                       I am fine.
+                     </div>
+                   </div>
+                   
+                   <div class="message-box-holder">
+                     <div class="message-box">
+                       Do you know why I knocked you today?
+                     </div>
+                   </div>
+                   
+                   <div class="message-box-holder">
+                     <div class="message-box">
+                       There's something important I would like to share with you. Do you have some time?
+                     </div>
+                   </div>
+                   
+                   <div class="message-box-holder">
+                     <div class="message-box message-partner">
+                       Yeah sure. Let's meet in the Einstein cafe this evening and discuss the matter.
+                     </div>
+                   </div>
+                   
+                   <div class="message-box-holder">
+                     <div class="message-box message-partner">
+                       I thought of coming to your place and discuss about it but I had to finish my projects and I didn't have enough time to go out of the house.
+                     </div>
+                   </div>      
+                 </div>
+            </div>
+            <div class="modal-footer">
+                <div class="attachment-panel">
+                    <mat-icon> photo_camera </mat-icon>
+                    <!-- <mat-icon> attach_file </mat-icon> -->
+                </div>
+                <div class="chat-input-holder">
+                    <textarea class="chat-input"></textarea>
+                    <button type="button" class="btn btn-outline-dark sent-btn">
+                        <!-- <mat-icon> mic </mat-icon> -->
+                        <mat-icon> send </mat-icon>
+                    </button>
+                </div>
+            </div>
+          </form>
+    </div>
+</ng-template>
